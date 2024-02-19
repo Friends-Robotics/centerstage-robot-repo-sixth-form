@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.driveropmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
 
@@ -36,15 +37,22 @@ public class EverythingOpMode extends LinearOpMode {
         waitForStart();
         teamHardwareMap.runTime.reset();
 
-        teamHardwareMap.bigSpinMotor.setPower(0.1);
+        // BSM positions: 0 - initial start from floor under gravity; 10 - touching floor for pincing; 30 - above floor for movement; 300 - swing round for backboard
+        teamHardwareMap.bigSpinMotor.setPower(0.25);
+        teamHardwareMap.bigSpinMotor.setTargetPosition(300);
+        teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         while (opModeIsActive()) {
             if (gamepad1.circle) {
+                /*
                 teamHardwareMap.bigSpinMotor.setPower(0.8);
                 teamHardwareMap.bigSpinMotor.setTargetPosition(); // go to certain position at current power - determine values when back at school
+                 */
             }
             else if (gamepad1.cross) {
+                /*
                 teamHardwareMap.bigSpinMotor.setPower(-0.3);
+                 */
             }
             else if (gamepad1.triangle) {
                 teamHardwareMap.smallSpinRightServo.setPosition(0.1);
@@ -55,13 +63,25 @@ public class EverythingOpMode extends LinearOpMode {
                 teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
             }
             else {
+                /*
                 if (teamHardwareMap.runTime.milliseconds() - gradualStopLastTime > 50) {
                     teamHardwareMap.bigSpinMotor.setPower(Math.max(0.1, teamHardwareMap.bigSpinMotor.getPower() - 0.05));
                     gradualStopLastTime = teamHardwareMap.runTime.milliseconds();
                 }
+
+                 */
+            }
+
+            if (gamepad1.dpad_up) {
+                teamHardwareMap.pincerSpinServo.setPosition(1);
+            }
+            else if (gamepad1.dpad_down) {
+                teamHardwareMap.pincerSpinServo.setPosition(0);
             }
 
             telemetry.addData("Power", teamHardwareMap.bigSpinMotor.getPower());
+            telemetry.addData("Position", teamHardwareMap.bigSpinMotor.getCurrentPosition());
+            telemetry.addData("Position", teamHardwareMap.bigSpinMotor.getTargetPosition());
             telemetry.update();
         }
     }

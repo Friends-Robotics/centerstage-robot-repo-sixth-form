@@ -46,7 +46,7 @@ public class FirstArmHardwareMap extends TeamHardwareMap {
         bigSpinMotor = hardwareMap.get(DcMotor.class, "BSM");
         bigSpinMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bigSpinMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bigSpinMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         bigSpinMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         frontLeftMotor = hardwareMap.get(CRServo.class, "FLW");

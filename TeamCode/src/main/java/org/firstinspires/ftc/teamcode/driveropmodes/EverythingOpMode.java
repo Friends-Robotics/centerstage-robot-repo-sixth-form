@@ -38,9 +38,6 @@ public class EverythingOpMode extends LinearOpMode {
         teamHardwareMap.runTime.reset();
 
         // BSM positions: 0 - initial start from floor under gravity; 10 - touching floor for pincing; 30 - above floor for movement; 300 - swing round for backboard
-        teamHardwareMap.bigSpinMotor.setPower(0.25);
-        teamHardwareMap.bigSpinMotor.setTargetPosition(300);
-        teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         while (opModeIsActive()) {
             if (gamepad1.circle) {
@@ -77,6 +74,24 @@ public class EverythingOpMode extends LinearOpMode {
             }
             else if (gamepad1.dpad_down) {
                 teamHardwareMap.pincerSpinServo.setPosition(0);
+            }
+
+            if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 230) {
+                teamHardwareMap.bigSpinMotor.setPower(0.20);
+            }
+            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 250) {
+                teamHardwareMap.bigSpinMotor.setPower(0.15);
+            }
+            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 275) {
+                teamHardwareMap.bigSpinMotor.setPower(0.10);
+            }
+            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 300) {
+                teamHardwareMap.bigSpinMotor.setPower(0.05);
+            }
+            else {
+                teamHardwareMap.bigSpinMotor.setPower(-0.1);
+                //teamHardwareMap.bigSpinMotor.setTargetPosition(300);
+                //teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
 
             telemetry.addData("Power", teamHardwareMap.bigSpinMotor.getPower());

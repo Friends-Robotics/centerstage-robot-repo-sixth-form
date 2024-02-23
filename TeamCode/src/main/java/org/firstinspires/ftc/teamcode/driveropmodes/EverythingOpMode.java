@@ -25,6 +25,7 @@ public class EverythingOpMode extends LinearOpMode {
 
     private FirstArmHardwareMap teamHardwareMap;
     private boolean pincerClosed = false;
+    private int holdAtTicks = 0;
 
     @Override
     public void runOpMode() {
@@ -37,36 +38,15 @@ public class EverythingOpMode extends LinearOpMode {
         waitForStart();
         teamHardwareMap.runTime.reset();
 
-        // BSM positions: 0 - initial start from floor under gravity; TBD - touching floor for pincing; TBD - above floor for movement; 440 - vertical up; 630 - swing round for backboard
-
         while (opModeIsActive()) {
-            if (gamepad1.circle) {
-                /*
-                teamHardwareMap.bigSpinMotor.setPower(0.8);
-                teamHardwareMap.bigSpinMotor.setTargetPosition(); // go to certain position at current power - determine values when back at school
-                 */
-            }
-            else if (gamepad1.cross) {
-                /*
-                teamHardwareMap.bigSpinMotor.setPower(-0.3);
-                 */
-            }
-            else if (gamepad1.triangle) {
-                teamHardwareMap.smallSpinRightServo.setPosition(0.1);
-                teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
-            }
-            else if (gamepad1.square) {
-                teamHardwareMap.smallSpinRightServo.setPosition(0.6);
-                teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
-            }
-            else {
-                /*
-                if (teamHardwareMap.runTime.milliseconds() - gradualStopLastTime > 50) {
-                    teamHardwareMap.bigSpinMotor.setPower(Math.max(0.1, teamHardwareMap.bigSpinMotor.getPower() - 0.05));
-                    gradualStopLastTime = teamHardwareMap.runTime.milliseconds();
+            if (gamepad1.triangle) {
+                double newPosition = 0.1;
+                if (teamHardwareMap.smallSpinLeftServo.getPosition() == 0.1) {
+                    newPosition = 0.6;
                 }
 
-                 */
+                teamHardwareMap.smallSpinRightServo.setPosition(newPosition);
+                teamHardwareMap.smallSpinLeftServo.setPosition(newPosition);
             }
 
             if (gamepad1.dpad_up) {
@@ -86,20 +66,22 @@ public class EverythingOpMode extends LinearOpMode {
                 }
             }
 
-            if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 450) {
+            if (gamepad1.circle) {
                 teamHardwareMap.bigSpinMotor.setPower(0.1);
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 620) {
-                teamHardwareMap.bigSpinMotor.setPower(0);
-            }
-            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() > 640) {
+            else if (gamepad1.square) {
                 teamHardwareMap.bigSpinMotor.setPower(-0.1);
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+            else if (gamepad1.cross) {
+                holdAtTicks = teamHardwareMap.bigSpinMotor.getCurrentPosition();
             }
             else {
-                teamHardwareMap.bigSpinMotor.setPower(-0.03);
+                teamHardwareMap.bigSpinMotor.setPower(0.05);
+                teamHardwareMap.bigSpinMotor.setTargetPosition(holdAtTicks);
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
-
-            //teamHardwareMap.bigSpinMotor.setPower(gamepad1.left_stick_y / 4);
 
             telemetry.addData("Power", teamHardwareMap.bigSpinMotor.getPower());
             telemetry.addData("Position", teamHardwareMap.bigSpinMotor.getCurrentPosition());

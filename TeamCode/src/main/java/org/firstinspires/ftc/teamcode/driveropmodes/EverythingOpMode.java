@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
 public class EverythingOpMode extends LinearOpMode {
 
     private FirstArmHardwareMap teamHardwareMap;
-    private double gradualStopLastTime;
+    private boolean pincerClosed = false;
 
     @Override
     public void runOpMode() {
@@ -37,7 +37,7 @@ public class EverythingOpMode extends LinearOpMode {
         waitForStart();
         teamHardwareMap.runTime.reset();
 
-        // BSM positions: 0 - initial start from floor under gravity; 10 - touching floor for pincing; 30 - above floor for movement; 300 - swing round for backboard
+        // BSM positions: 0 - initial start from floor under gravity; TBD - touching floor for pincing; TBD - above floor for movement; 440 - vertical up; 630 - swing round for backboard
 
         while (opModeIsActive()) {
             if (gamepad1.circle) {
@@ -70,29 +70,36 @@ public class EverythingOpMode extends LinearOpMode {
             }
 
             if (gamepad1.dpad_up) {
-                teamHardwareMap.pincerSpinServo.setPosition(1);
+                pincerClosed = false;
+                teamHardwareMap.pincerSpinServo.setPower(-1);
             }
             else if (gamepad1.dpad_down) {
-                teamHardwareMap.pincerSpinServo.setPosition(0);
-            }
-
-            if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 230) {
-                teamHardwareMap.bigSpinMotor.setPower(0.20);
-            }
-            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 250) {
-                teamHardwareMap.bigSpinMotor.setPower(0.15);
-            }
-            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 275) {
-                teamHardwareMap.bigSpinMotor.setPower(0.10);
-            }
-            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 300) {
-                teamHardwareMap.bigSpinMotor.setPower(0.05);
+                pincerClosed = true;
+                teamHardwareMap.pincerSpinServo.setPower(1);
             }
             else {
-                teamHardwareMap.bigSpinMotor.setPower(-0.1);
-                //teamHardwareMap.bigSpinMotor.setTargetPosition(300);
-                //teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                if (pincerClosed) {
+                    teamHardwareMap.pincerSpinServo.setPower(1);
+                }
+                else {
+                    teamHardwareMap.pincerSpinServo.setPower(0);
+                }
             }
+
+            if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 450) {
+                teamHardwareMap.bigSpinMotor.setPower(0.1);
+            }
+            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 620) {
+                teamHardwareMap.bigSpinMotor.setPower(0);
+            }
+            else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() > 640) {
+                teamHardwareMap.bigSpinMotor.setPower(-0.1);
+            }
+            else {
+                teamHardwareMap.bigSpinMotor.setPower(-0.03);
+            }
+
+            //teamHardwareMap.bigSpinMotor.setPower(gamepad1.left_stick_y / 4);
 
             telemetry.addData("Power", teamHardwareMap.bigSpinMotor.getPower());
             telemetry.addData("Position", teamHardwareMap.bigSpinMotor.getCurrentPosition());

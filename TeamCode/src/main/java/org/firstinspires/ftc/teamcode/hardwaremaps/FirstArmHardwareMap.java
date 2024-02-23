@@ -21,7 +21,7 @@ public class FirstArmHardwareMap extends TeamHardwareMap {
     public Servo smallSpinLeftServo;
     public Servo smallSpinRightServo;
 
-    public Servo pincerSpinServo;
+    public CRServo pincerSpinServo;
 
     @Override
     protected void initialise() {
@@ -55,6 +55,7 @@ public class FirstArmHardwareMap extends TeamHardwareMap {
         smallSpinLeftServo.setDirection(Servo.Direction.REVERSE);
         smallSpinRightServo = hardwareMap.get(Servo.class, "SSRS");
         smallSpinRightServo.setDirection(Servo.Direction.FORWARD);
-        pincerSpinServo = hardwareMap.get(Servo.class, "PSS");
+        pincerSpinServo = hardwareMap.get(CRServo.class, "PSS");
+        pincerSpinServo.setDirection(CRServo.Direction.FORWARD);
     }
 }

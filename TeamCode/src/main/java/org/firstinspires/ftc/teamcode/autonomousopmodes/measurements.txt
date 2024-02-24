@@ -1,0 +1,8 @@
+Outer diameter of mecanum wheel = d = 96mm
+Circumference of mecanum wheel = C = 96mm * PI
+
+Encoder ticks for a full revolution of one mecanum wheel = T = to be calculated
+
+therefore, moving every wheel by T encoder ticks causes the robot to move C millimeters forward
+
+therefore, T/C encoder ticks is 1mm of movement

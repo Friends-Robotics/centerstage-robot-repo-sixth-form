@@ -24,6 +24,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -57,7 +58,7 @@ public class AprilTagsTestOpMode extends LinearOpMode {
 
     AprilTagDetection tagOfInterest = null;
 
-    private MecanumMotorsLinearSlideGrabberHardwareMap teamHardwareMap;
+    private FirstArmHardwareMap teamHardwareMap;
 
     @Override
     public void runOpMode() {
@@ -80,9 +81,8 @@ public class AprilTagsTestOpMode extends LinearOpMode {
 
         telemetry.setMsTransmissionInterval(50);
 
-        //teamHardwareMap = new MecanumMotorsLinearSlideGrabberHardwareMap(hardwareMap);
-        //MecanumHelper mecanumHelper = new MecanumHelper(teamHardwareMap.frontRightMotor, teamHardwareMap.backRightMotor, teamHardwareMap.backLeftMotor, teamHardwareMap.frontLeftMotor, true);
-        //teamHardwareMap.runTime.reset();
+        teamHardwareMap = new FirstArmHardwareMap(hardwareMap);
+        teamHardwareMap.runTime.reset();
 
         /*
          * The INIT-loop:
@@ -160,41 +160,30 @@ public class AprilTagsTestOpMode extends LinearOpMode {
             /*
              * Insert your autonomous code here, probably using the tag pose to decide your configuration.
              */
+            teamHardwareMap.runTime.reset();
             switch (tagOfInterest.id) {
                 case LEFT:
                     break;
 
                 case MIDDLE:
-                    teamHardwareMap.frontLeftMotor.setTargetPosition((int) (-1.4 * 569));
-                    teamHardwareMap.backRightMotor.setTargetPosition((int) (-1.4 * 569));
-                    teamHardwareMap.backLeftMotor.setTargetPosition((int) (-1.4 * -569));
-                    teamHardwareMap.frontRightMotor.setTargetPosition((int) (-1.4 * -569));
-                    teamHardwareMap.frontLeftMotor.setPower(0.2);
-                    teamHardwareMap.backRightMotor.setPower(0.2);
-                    teamHardwareMap.backLeftMotor.setPower(0.2);
-                    teamHardwareMap.frontRightMotor.setPower(0.2);
+                    while (opModeIsActive()) {
+                        if (teamHardwareMap.runTime.milliseconds() < 2000) {
+                            teamHardwareMap.frontLeftMotor.setPower(0.1);
+                            teamHardwareMap.frontRightMotor.setPower(0.1);
+                            teamHardwareMap.backLeftMotor.setPower(0.1);
+                            teamHardwareMap.backRightMotor.setPower(0.1);
 
-                    teamHardwareMap.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    teamHardwareMap.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    teamHardwareMap.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    teamHardwareMap.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    telemetry.addData("FLW", teamHardwareMap.frontLeftMotor.getCurrentPosition());
-                    telemetry.addData("FRW", teamHardwareMap.frontRightMotor.getCurrentPosition());
-                    telemetry.addData("BLW", teamHardwareMap.backLeftMotor.getCurrentPosition());
-                    telemetry.addData("BRW", teamHardwareMap.backRightMotor.getCurrentPosition());
-                    telemetry.update();
+                            //teamHardwareMap.frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); CRServo
+                            teamHardwareMap.frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                            teamHardwareMap.backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                            teamHardwareMap.backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        }
+                    }
                     break;
 
                 case RIGHT:
                     break;
             }
-        }
-
-
-        /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (opModeIsActive()) {
-            sleep(20);
         }
     }
 

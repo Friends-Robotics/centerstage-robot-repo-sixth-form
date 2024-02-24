@@ -1,8 +1,13 @@
-Outer diameter of mecanum wheel = d = 96mm
-Circumference of mecanum wheel = C = 96mm * PI
+Time taken to move 1 metre forward/backward @ 0.2 power: X seconds
+Time taken to move 1 metre right/left @ 0.2 power: X seconds
 
-Encoder ticks for a full revolution of one mecanum wheel = T = to be calculated
+Time needed to rotate 90 degrees: X seconds
 
-therefore, moving every wheel by T encoder ticks causes the robot to move C millimeters forward
-
-therefore, T/C encoder ticks is 1mm of movement
+Important playing field measurements:
+Floor to top of truss: 23.5"
+Floor to middle pipe: 14"
+Tile size: 23" sides
+Floor size: 6x6 tiles
+Pixel outer diameter: 3"
+Pixel inner diameter 1.25"
+Pixel thickness: 0.5"

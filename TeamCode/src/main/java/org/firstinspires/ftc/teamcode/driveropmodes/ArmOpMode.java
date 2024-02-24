@@ -20,8 +20,8 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Test all", group="Linear Opmode")
-public class EverythingOpMode extends LinearOpMode {
+@TeleOp(name="Arm", group="Linear Opmode")
+public class ArmOpMode extends LinearOpMode {
 
     private FirstArmHardwareMap teamHardwareMap;
     private boolean pincerClosed = false;

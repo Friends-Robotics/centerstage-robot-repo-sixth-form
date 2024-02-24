@@ -25,7 +25,11 @@ public class EverythingOpMode extends LinearOpMode {
 
     private FirstArmHardwareMap teamHardwareMap;
     private boolean pincerClosed = false;
+    private boolean intakeAngledTowardsBackboard = false;
     private int holdAtTicks = 0;
+    private boolean goingUp = false;
+    private boolean goingDown = false;
+    private boolean youHaveArrivedAtYourDestination = true;
 
     @Override
     public void runOpMode() {
@@ -34,19 +38,24 @@ public class EverythingOpMode extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        teamHardwareMap.smallSpinRightServo.setPosition(0.1);
+        teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive()) {
-            if (gamepad1.triangle) {
-                double newPosition = 0.1;
-                if (teamHardwareMap.smallSpinLeftServo.getPosition() == 0.1) {
-                    newPosition = 0.6;
-                }
-
-                teamHardwareMap.smallSpinRightServo.setPosition(newPosition);
-                teamHardwareMap.smallSpinLeftServo.setPosition(newPosition);
+            if (gamepad1.dpad_left) {
+                intakeAngledTowardsBackboard = !intakeAngledTowardsBackboard;
+            }
+            if (intakeAngledTowardsBackboard) {
+                teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
+                teamHardwareMap.smallSpinRightServo.setPosition(0.6);
+            }
+            else {
+                teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
+                teamHardwareMap.smallSpinRightServo.setPosition(0.1);
             }
 
             if (gamepad1.dpad_up) {
@@ -66,26 +75,47 @@ public class EverythingOpMode extends LinearOpMode {
                 }
             }
 
-            if (gamepad1.circle) {
-                teamHardwareMap.bigSpinMotor.setPower(0.1);
-                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
-            else if (gamepad1.square) {
-                teamHardwareMap.bigSpinMotor.setPower(-0.1);
-                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
-            else if (gamepad1.cross) {
-                holdAtTicks = teamHardwareMap.bigSpinMotor.getCurrentPosition();
-            }
-            else {
+            /*if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 75) {
                 teamHardwareMap.bigSpinMotor.setPower(0.05);
-                teamHardwareMap.bigSpinMotor.setTargetPosition(holdAtTicks);
-                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
+            else {*/
+                if (gamepad1.circle) {
+                    goingUp = true;
+                    goingDown = false;
+                    youHaveArrivedAtYourDestination = false;
+                } else if (gamepad1.square) {
+                    goingUp = false;
+                    goingDown = true;
+                    youHaveArrivedAtYourDestination = false;
+                } else if (gamepad1.cross) {
+                    goingUp = false;
+                    goingDown = false;
+                    youHaveArrivedAtYourDestination = true;
+                    holdAtTicks = teamHardwareMap.bigSpinMotor.getCurrentPosition();
+                }
+                if (goingUp) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.1);
+                    teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
+                if (goingDown) {
+                    teamHardwareMap.bigSpinMotor.setPower(-0.1);
+                    teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
+                if (youHaveArrivedAtYourDestination) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.05);
+                    teamHardwareMap.bigSpinMotor.setTargetPosition(holdAtTicks);
+                    teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                }
+            //}
 
-            telemetry.addData("Power", teamHardwareMap.bigSpinMotor.getPower());
-            telemetry.addData("Position", teamHardwareMap.bigSpinMotor.getCurrentPosition());
-            telemetry.addData("Position", teamHardwareMap.bigSpinMotor.getTargetPosition());
+            telemetry.addData("(BSM) Power", teamHardwareMap.bigSpinMotor.getPower());
+            telemetry.addData("(BSM) Position", teamHardwareMap.bigSpinMotor.getCurrentPosition());
+            telemetry.addData("(BSM) Target position", teamHardwareMap.bigSpinMotor.getTargetPosition());
+            telemetry.addData("(BSM) Going up", goingUp);
+            telemetry.addData("(BSM) Going down", goingDown);
+            telemetry.addData("(BSM) You have arrived at your destination", youHaveArrivedAtYourDestination);
+            telemetry.addData("(SSLS) Position", teamHardwareMap.smallSpinLeftServo.getPosition());
             telemetry.update();
         }
     }

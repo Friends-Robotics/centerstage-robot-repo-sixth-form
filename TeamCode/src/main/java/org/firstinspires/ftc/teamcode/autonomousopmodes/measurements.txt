@@ -1,7 +1,7 @@
 Time taken to move 1 metre forward/backward @ 0.2 power: X seconds
 Time taken to move 1 metre right/left @ 0.2 power: X seconds
 
-Time needed to rotate 90 degrees: X seconds
+Time needed to rotate 90 degrees @ 0.2 power: X seconds
 
 Important playing field measurements:
 Floor to top of truss: 23.5"

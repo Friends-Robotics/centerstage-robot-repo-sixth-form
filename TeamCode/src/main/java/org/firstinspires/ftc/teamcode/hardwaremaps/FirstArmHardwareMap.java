@@ -27,19 +27,19 @@ public class FirstArmHardwareMap extends TeamHardwareMap {
     protected void initialise() {
         frontRightMotor = hardwareMap.get(DcMotor.class, "FRW");
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         backRightMotor = hardwareMap.get(DcMotor.class, "BRW");
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         backLeftMotor = hardwareMap.get(DcMotor.class, "BLW");
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -50,7 +50,7 @@ public class FirstArmHardwareMap extends TeamHardwareMap {
         bigSpinMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         frontLeftMotor = hardwareMap.get(CRServo.class, "FLW");
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         smallSpinLeftServo = hardwareMap.get(Servo.class, "SSLS");
         smallSpinLeftServo.setDirection(Servo.Direction.REVERSE);
         smallSpinRightServo = hardwareMap.get(Servo.class, "SSRS");

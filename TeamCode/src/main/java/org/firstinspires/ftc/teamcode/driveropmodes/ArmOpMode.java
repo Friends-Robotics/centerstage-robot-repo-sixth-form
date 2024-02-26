@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.driveropmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.MecanumHelper;
 import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
 
 
@@ -30,10 +32,15 @@ public class ArmOpMode extends LinearOpMode {
     private boolean goingUp = false;
     private boolean goingDown = false;
     private boolean youHaveArrivedAtYourDestination = true;
+    private MecanumHelper mecanumHelper;
+    private boolean dpadLock = false;
+    private ElapsedTime dpadLockTimer = new ElapsedTime();
+    private boolean armLock = true;
 
     @Override
     public void runOpMode() {
         teamHardwareMap = new FirstArmHardwareMap(hardwareMap);
+        mecanumHelper = new MecanumHelper(teamHardwareMap.frontRightMotor, teamHardwareMap.backRightMotor, teamHardwareMap.backLeftMotor, teamHardwareMap.frontLeftMotor);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -46,8 +53,24 @@ public class ArmOpMode extends LinearOpMode {
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive()) {
-            if (gamepad1.dpad_left) {
+            // MOVEMENT
+
+            if (!approxEquals(gamepad2.right_stick_x, 0, 0.05)) { // no rotation, move
+                mecanumHelper.move(gamepad2.left_stick_x, gamepad2.left_stick_y);
+            }
+            else { // rotate
+                mecanumHelper.rotate(gamepad2.right_stick_x);
+            }
+
+            // ARM
+
+            if (dpadLockTimer.milliseconds() > 1000) {
+                dpadLock = false;
+            }
+            if (gamepad1.dpad_left && !dpadLock) {
                 intakeAngledTowardsBackboard = !intakeAngledTowardsBackboard;
+                dpadLock = true;
+                dpadLockTimer.reset();
             }
             if (intakeAngledTowardsBackboard) {
                 teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
@@ -80,31 +103,15 @@ public class ArmOpMode extends LinearOpMode {
                 teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
             else {*/
-                if (gamepad1.circle) {
-                    goingUp = true;
-                    goingDown = false;
-                    youHaveArrivedAtYourDestination = false;
-                } else if (gamepad1.square) {
-                    goingUp = false;
-                    goingDown = true;
-                    youHaveArrivedAtYourDestination = false;
-                } else if (gamepad1.cross) {
-                    goingUp = false;
-                    goingDown = false;
-                    youHaveArrivedAtYourDestination = true;
-                    holdAtTicks = teamHardwareMap.bigSpinMotor.getCurrentPosition();
-                }
-                if (goingUp) {
-                    teamHardwareMap.bigSpinMotor.setPower(0.1);
+                if (!approxEquals(gamepad1.left_stick_y, 0, 0.05)) {
+                    armLock = false;
+                    teamHardwareMap.bigSpinMotor.setPower(-gamepad1.left_stick_y / 4);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
-                if (goingDown) {
-                    teamHardwareMap.bigSpinMotor.setPower(-0.1);
-                    teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                }
-                if (youHaveArrivedAtYourDestination) {
+                else if (!armLock) {
+                    armLock = true;
                     teamHardwareMap.bigSpinMotor.setPower(0.05);
-                    teamHardwareMap.bigSpinMotor.setTargetPosition(holdAtTicks);
+                    teamHardwareMap.bigSpinMotor.setTargetPosition(teamHardwareMap.bigSpinMotor.getCurrentPosition());
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 }
             //}
@@ -118,5 +125,9 @@ public class ArmOpMode extends LinearOpMode {
             telemetry.addData("(SSLS) Position", teamHardwareMap.smallSpinLeftServo.getPosition());
             telemetry.update();
         }
+    }
+
+    private boolean approxEquals(double a, double b, double tolerance) {
+        return Math.abs(a - b) < tolerance;
     }
 }

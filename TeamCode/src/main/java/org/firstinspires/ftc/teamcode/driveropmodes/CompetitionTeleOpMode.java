@@ -33,8 +33,8 @@ public class CompetitionTeleOpMode extends LinearOpMode {
     private boolean goingDown = false;
     private boolean youHaveArrivedAtYourDestination = true;
     private MecanumHelper mecanumHelper;
-    private boolean pincerLock = false;
-    private ElapsedTime pincerTimer = new ElapsedTime();
+    private boolean intakeAngleChangeLock = false;
+    private ElapsedTime intakeAngleChangeTimer = new ElapsedTime();
     private boolean speedChangeLock = false;
     private ElapsedTime speedChangeTimer = new ElapsedTime();
     private boolean armLock = true;
@@ -88,13 +88,13 @@ public class CompetitionTeleOpMode extends LinearOpMode {
 
             // ARM
 
-            if (pincerTimer.milliseconds() > 1000) {
-                pincerLock = false;
+            if (intakeAngleChangeTimer.milliseconds() > 1000) {
+                intakeAngleChangeLock = false;
             }
-            if (gamepad1.dpad_left && !pincerLock) {
+            if ((gamepad1.dpad_down || gamepad1.dpad_up) && !intakeAngleChangeLock) {
                 intakeAngledTowardsBackboard = !intakeAngledTowardsBackboard;
-                pincerLock = true;
-                pincerTimer.reset();
+                intakeAngleChangeLock = true;
+                intakeAngleChangeTimer.reset();
             }
             if (intakeAngledTowardsBackboard) {
                 teamHardwareMap.smallSpinLeftServo.setPosition(0.6);

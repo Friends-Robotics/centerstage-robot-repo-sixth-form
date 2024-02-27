@@ -65,7 +65,7 @@ public class CompetitionTeleOpMode extends LinearOpMode {
 
             // MOVEMENT
 
-            if (approxEquals(gamepad2.right_stick_x, 0, 0.05)) { // no rotation, move
+            if (approxEquals(gamepad2.right_stick_x, 0, 0.001)) { // no rotation, move
                 mecanumHelper.move(gamepad2.left_stick_x, -gamepad2.left_stick_y);
             }
             else { // rotate
@@ -105,11 +105,11 @@ public class CompetitionTeleOpMode extends LinearOpMode {
                 teamHardwareMap.smallSpinRightServo.setPosition(0.1);
             }
 
-            if (gamepad1.dpad_up) {
+            if (gamepad1.circle) {
                 pincerClosed = false;
                 teamHardwareMap.pincerSpinServo.setPower(-1);
             }
-            else if (gamepad1.dpad_down) {
+            else if (gamepad1.cross) {
                 pincerClosed = true;
                 teamHardwareMap.pincerSpinServo.setPower(1);
             }
@@ -122,23 +122,17 @@ public class CompetitionTeleOpMode extends LinearOpMode {
                 }
             }
 
-            /*if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 75) {
-                teamHardwareMap.bigSpinMotor.setPower(0.05);
+            if (!approxEquals(gamepad1.left_stick_y, 0, 0.001)) {
+                armLock = false;
+                teamHardwareMap.bigSpinMotor.setPower(-gamepad1.left_stick_y / 10);
                 teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            else {*/
-                if (!approxEquals(gamepad1.left_stick_y, 0, 0.001)) {
-                    armLock = false;
-                    teamHardwareMap.bigSpinMotor.setPower(-gamepad1.left_stick_y / 10);
-                    teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                }
-                else if (!armLock) {
-                    armLock = true;
-                    teamHardwareMap.bigSpinMotor.setPower(0.1);
-                    teamHardwareMap.bigSpinMotor.setTargetPosition(teamHardwareMap.bigSpinMotor.getCurrentPosition());
-                    teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                }
-            //}
+            else if (!armLock) {
+                armLock = true;
+                teamHardwareMap.bigSpinMotor.setPower(0.1);
+                teamHardwareMap.bigSpinMotor.setTargetPosition(teamHardwareMap.bigSpinMotor.getCurrentPosition());
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
 
             telemetry.addData("(BSM) Power", teamHardwareMap.bigSpinMotor.getPower());
             telemetry.addData("(BSM) Position", teamHardwareMap.bigSpinMotor.getCurrentPosition());

@@ -16,7 +16,7 @@ public class MecanumHelper {
         FLW // front left wheel
     }
 
-    public double speed;
+    public double drivingSpeed;
     public double autonomousSpeed;
 
     public MecanumHelper(DcMotor frontRightMotor, DcMotor backRightMotor, DcMotor backLeftMotor, CRServo frontLeftMotor) {
@@ -24,23 +24,40 @@ public class MecanumHelper {
         this.backRightMotor = backRightMotor;
         this.backLeftMotor = backLeftMotor;
         this.frontLeftMotor = frontLeftMotor;
-        this.speed = 0.5;
+        this.drivingSpeed = 0.5;
         this.autonomousSpeed = 0.4;
     }
 
     public void SetMotorPower(Motor motor, double power) {
         switch (motor) {
             case FRW:
-                frontRightMotor.setPower(power * speed);
+                frontRightMotor.setPower(power * drivingSpeed);
                 break;
             case BRW:
-                backRightMotor.setPower(power * speed);
+                backRightMotor.setPower(power * drivingSpeed);
                 break;
             case BLW:
-                backLeftMotor.setPower(power * speed);
+                backLeftMotor.setPower(power * drivingSpeed);
                 break;
             case FLW:
-                frontLeftMotor.setPower(power * speed);
+                frontLeftMotor.setPower(power * drivingSpeed);
+                break;
+        }
+    }
+
+    public void SetMotorPowerAutonomous(Motor motor, double power) {
+        switch (motor) {
+            case FRW:
+                frontRightMotor.setPower(power * autonomousSpeed);
+                break;
+            case BRW:
+                backRightMotor.setPower(power * autonomousSpeed);
+                break;
+            case BLW:
+                backLeftMotor.setPower(power * autonomousSpeed);
+                break;
+            case FLW:
+                frontLeftMotor.setPower(power * autonomousSpeed);
                 break;
         }
     }
@@ -103,37 +120,37 @@ public class MecanumHelper {
     }
 
     public void autonomousForward() {
-        SetMotorPower(Motor.BLW, autonomousSpeed);
-        SetMotorPower(Motor.BRW, autonomousSpeed);
-        SetMotorPower(Motor.FLW, autonomousSpeed);
-        SetMotorPower(Motor.FRW, autonomousSpeed);
+        SetMotorPowerAutonomous(Motor.BLW, 1);
+        SetMotorPowerAutonomous(Motor.BRW, 1);
+        SetMotorPowerAutonomous(Motor.FLW, 1);
+        SetMotorPowerAutonomous(Motor.FRW, 1);
     }
 
     public void autonomousBackward() {
-        SetMotorPower(Motor.BLW, -autonomousSpeed);
-        SetMotorPower(Motor.BRW, -autonomousSpeed);
-        SetMotorPower(Motor.FLW, -autonomousSpeed);
-        SetMotorPower(Motor.FRW, -autonomousSpeed);
+        SetMotorPowerAutonomous(Motor.BLW, -1);
+        SetMotorPowerAutonomous(Motor.BRW, -1);
+        SetMotorPowerAutonomous(Motor.FLW, -1);
+        SetMotorPowerAutonomous(Motor.FRW, -1);
     }
 
     public void autonomousMoveLeft() {
-        SetMotorPower(Motor.BLW, autonomousSpeed);
-        SetMotorPower(Motor.BRW, -autonomousSpeed);
-        SetMotorPower(Motor.FLW, -autonomousSpeed);
-        SetMotorPower(Motor.FRW, autonomousSpeed);
+        SetMotorPowerAutonomous(Motor.BLW, 1);
+        SetMotorPowerAutonomous(Motor.BRW, -1);
+        SetMotorPowerAutonomous(Motor.FLW, -1);
+        SetMotorPowerAutonomous(Motor.FRW, 1);
     }
 
     public void autonomousMoveRight() {
-        SetMotorPower(Motor.BLW, -autonomousSpeed);
-        SetMotorPower(Motor.BRW, autonomousSpeed);
-        SetMotorPower(Motor.FLW, autonomousSpeed);
-        SetMotorPower(Motor.FRW, -autonomousSpeed);
+        SetMotorPowerAutonomous(Motor.BLW, -1);
+        SetMotorPowerAutonomous(Motor.BRW, 1);
+        SetMotorPowerAutonomous(Motor.FLW, 1);
+        SetMotorPowerAutonomous(Motor.FRW, -1);
     }
 
     public void autonomousStop() {
-        SetMotorPower(Motor.BLW, 0);
-        SetMotorPower(Motor.BRW, 0);
-        SetMotorPower(Motor.FLW, 0);
-        SetMotorPower(Motor.FRW, 0);
+        SetMotorPowerAutonomous(Motor.BLW, 0);
+        SetMotorPowerAutonomous(Motor.BRW, 0);
+        SetMotorPowerAutonomous(Motor.FLW, 0);
+        SetMotorPowerAutonomous(Motor.FRW, 0);
     }
 }

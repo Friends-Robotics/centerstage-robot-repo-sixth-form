@@ -78,12 +78,12 @@ public class ArmOpMode extends LinearOpMode {
             if (gamepad2.right_bumper && !speedChangeLock) {
                 speedChangeLock = true;
                 speedChangeTimer.reset();
-                mecanumHelper.speed += 0.05;
+                mecanumHelper.drivingSpeed += 0.05;
             }
             if (gamepad2.left_bumper && !speedChangeLock) {
                 speedChangeLock = true;
                 speedChangeTimer.reset();
-                mecanumHelper.speed -= 0.05;
+                mecanumHelper.drivingSpeed -= 0.05;
             }
 
             // ARM
@@ -147,7 +147,7 @@ public class ArmOpMode extends LinearOpMode {
             telemetry.addData("(BSM) Going down", goingDown);
             telemetry.addData("(BSM) You have arrived at your destination", youHaveArrivedAtYourDestination);
             telemetry.addData("(SSLS) Position", teamHardwareMap.smallSpinLeftServo.getPosition());
-            telemetry.addData("SPEED", mecanumHelper.speed);
+            telemetry.addData("SPEED", mecanumHelper.drivingSpeed);
             telemetry.update();
         }
     }

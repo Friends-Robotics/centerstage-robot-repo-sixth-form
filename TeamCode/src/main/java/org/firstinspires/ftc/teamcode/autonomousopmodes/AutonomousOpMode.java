@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.MecanumHelper;
 import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
+import org.firstinspires.ftc.teamcode.AutonomousHelper;
 
 
 /**
@@ -25,8 +26,6 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
 @Autonomous(name="Autonomous Testing", group="Linear Opmode")
 public class AutonomousOpMode extends LinearOpMode {
 
-    public static final int MILLISECONDS_PER_VERTICAL_TILE = 625;
-    public static final int MILLISECONDS_PER_HORIZONTAL_TILE = 749;
     private FirstArmHardwareMap teamHardwareMap;
     private MecanumHelper mecanumHelper;
 
@@ -50,13 +49,16 @@ public class AutonomousOpMode extends LinearOpMode {
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive()) {
-            if (teamHardwareMap.runTime.milliseconds() < MILLISECONDS_PER_HORIZONTAL_TILE * 1) { // one tile left
+            if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1) { // one tile left
                 mecanumHelper.autonomousMoveLeft();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < MILLISECONDS_PER_HORIZONTAL_TILE * 1 + MILLISECONDS_PER_VERTICAL_TILE * 2) { // then, two tiles backward
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                    + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE * 2) { // then, two tiles backward
                 mecanumHelper.autonomousBackward();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < MILLISECONDS_PER_HORIZONTAL_TILE * 1 + MILLISECONDS_PER_VERTICAL_TILE * 2 + 5000) {
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                     + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE * 2
+                     + 10 * 1000) { // then, 10 seconds to drop pixels
                 mecanumHelper.autonomousStop();
                 // 500 is vertical
                 if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 350) {

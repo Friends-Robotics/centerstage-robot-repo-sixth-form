@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.autonomousopmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.MecanumHelper;
@@ -23,8 +22,8 @@ import org.firstinspires.ftc.teamcode.AutonomousHelper;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autonomous Testing", group="Linear Opmode")
-public class AutonomousOpMode extends LinearOpMode {
+@Autonomous(name="BLUE CLOSE", group="Linear Opmode")
+public class BlueCloseAutonomousOpMode extends LinearOpMode {
 
     private FirstArmHardwareMap teamHardwareMap;
     private MecanumHelper mecanumHelper;

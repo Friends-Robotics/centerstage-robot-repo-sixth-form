@@ -41,6 +41,10 @@ public class AutonomousOpMode extends LinearOpMode {
         teamHardwareMap.smallSpinRightServo.setPosition(0.1);
         teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
 
+        teamHardwareMap.bigSpinMotor.setPower(0.1);
+        teamHardwareMap.bigSpinMotor.setTargetPosition(100);
+        teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         teamHardwareMap.runTime.reset();
@@ -52,13 +56,27 @@ public class AutonomousOpMode extends LinearOpMode {
             else if (teamHardwareMap.runTime.milliseconds() < MILLISECONDS_PER_HORIZONTAL_TILE * 1 + MILLISECONDS_PER_VERTICAL_TILE * 2) { // then, two tiles backward
                 mecanumHelper.autonomousBackward();
             }
+            else if (teamHardwareMap.runTime.milliseconds() < MILLISECONDS_PER_HORIZONTAL_TILE * 1 + MILLISECONDS_PER_VERTICAL_TILE * 2 + 5000) {
+                mecanumHelper.autonomousStop();
+                teamHardwareMap.bigSpinMotor.setPower(0.05);
+                teamHardwareMap.bigSpinMotor.setTargetPosition(550);
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                teamHardwareMap.smallSpinRightServo.setPosition(0.6);
+                teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
+            }
             else {
                 mecanumHelper.autonomousStop();
+                teamHardwareMap.bigSpinMotor.setPower(0.05);
+                teamHardwareMap.bigSpinMotor.setTargetPosition(100);
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                teamHardwareMap.smallSpinRightServo.setPosition(0.1);
+                teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
             }
 
             telemetry.addData("(FRW) Position", teamHardwareMap.frontRightMotor.getCurrentPosition());
             telemetry.addData("(BLW) Position", teamHardwareMap.backLeftMotor.getCurrentPosition());
             telemetry.addData("(BRW) Position", teamHardwareMap.backRightMotor.getCurrentPosition());
+            telemetry.addData("(BSM) Position", teamHardwareMap.bigSpinMotor.getCurrentPosition());
             telemetry.update();
         }
     }

@@ -58,7 +58,19 @@ public class AutonomousOpMode extends LinearOpMode {
             }
             else if (teamHardwareMap.runTime.milliseconds() < MILLISECONDS_PER_HORIZONTAL_TILE * 1 + MILLISECONDS_PER_VERTICAL_TILE * 2 + 5000) {
                 mecanumHelper.autonomousStop();
-                teamHardwareMap.bigSpinMotor.setPower(0.05);
+                // 500 is vertical
+                if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 350) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.1);
+                }
+                else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 400) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.05);
+                }
+                else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 500) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.025);
+                }
+                else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 600) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.05);
+                }
                 teamHardwareMap.bigSpinMotor.setTargetPosition(550);
                 teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 teamHardwareMap.smallSpinRightServo.setPosition(0.6);
@@ -66,7 +78,19 @@ public class AutonomousOpMode extends LinearOpMode {
             }
             else {
                 mecanumHelper.autonomousStop();
-                teamHardwareMap.bigSpinMotor.setPower(0.05);
+                // 500 is vertical
+                if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 350) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.05);
+                }
+                else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 400) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.025);
+                }
+                else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 500) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.05);
+                }
+                else if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 600) {
+                    teamHardwareMap.bigSpinMotor.setPower(0.1);
+                }
                 teamHardwareMap.bigSpinMotor.setTargetPosition(100);
                 teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 teamHardwareMap.smallSpinRightServo.setPosition(0.1);

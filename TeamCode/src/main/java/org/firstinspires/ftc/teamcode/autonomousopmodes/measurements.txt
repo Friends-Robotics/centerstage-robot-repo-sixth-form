@@ -16,3 +16,5 @@ Floor size: 6x6 tiles
 Pixel outer diameter: 3"
 Pixel inner diameter 1.25"
 Pixel thickness: 0.5"
+
+Vertical arm ticks: X

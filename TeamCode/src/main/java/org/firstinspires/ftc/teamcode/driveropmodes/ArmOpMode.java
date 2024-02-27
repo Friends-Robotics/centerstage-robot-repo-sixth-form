@@ -33,8 +33,10 @@ public class ArmOpMode extends LinearOpMode {
     private boolean goingDown = false;
     private boolean youHaveArrivedAtYourDestination = true;
     private MecanumHelper mecanumHelper;
-    private boolean dpadLock = false;
-    private ElapsedTime dpadLockTimer = new ElapsedTime();
+    private boolean pincerLock = false;
+    private ElapsedTime pincerTimer = new ElapsedTime();
+    private boolean speedChangeLock = false;
+    private ElapsedTime speedChangeTimer = new ElapsedTime();
     private boolean armLock = true;
 
     @Override
@@ -53,24 +55,46 @@ public class ArmOpMode extends LinearOpMode {
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive()) {
+            // AIRPLANE LAUNCHER
+
+            if (gamepad1.square && gamepad1.cross && gamepad1.triangle && gamepad1.circle
+                && gamepad2.square && gamepad2.cross && gamepad2.triangle && gamepad2.circle) {
+                teamHardwareMap.airplaneLauncherServo.setPower(1);
+                continue;
+            }
+
             // MOVEMENT
 
-            if (!approxEquals(gamepad2.right_stick_x, 0, 0.05)) { // no rotation, move
-                mecanumHelper.move(gamepad2.left_stick_x, gamepad2.left_stick_y);
+            if (approxEquals(gamepad2.right_stick_x, 0, 0.05)) { // no rotation, move
+                mecanumHelper.move(gamepad2.left_stick_x, -gamepad2.left_stick_y);
             }
             else { // rotate
                 mecanumHelper.rotate(gamepad2.right_stick_x);
             }
 
+            if (speedChangeTimer.milliseconds() > 200) {
+                speedChangeLock = false;
+            }
+            if (gamepad2.right_bumper && !speedChangeLock) {
+                speedChangeLock = true;
+                speedChangeTimer.reset();
+                mecanumHelper.speed += 0.05;
+            }
+            if (gamepad2.left_bumper && !speedChangeLock) {
+                speedChangeLock = true;
+                speedChangeTimer.reset();
+                mecanumHelper.speed -= 0.05;
+            }
+
             // ARM
 
-            if (dpadLockTimer.milliseconds() > 1000) {
-                dpadLock = false;
+            if (pincerTimer.milliseconds() > 1000) {
+                pincerLock = false;
             }
-            if (gamepad1.dpad_left && !dpadLock) {
+            if (gamepad1.dpad_left && !pincerLock) {
                 intakeAngledTowardsBackboard = !intakeAngledTowardsBackboard;
-                dpadLock = true;
-                dpadLockTimer.reset();
+                pincerLock = true;
+                pincerTimer.reset();
             }
             if (intakeAngledTowardsBackboard) {
                 teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
@@ -103,14 +127,14 @@ public class ArmOpMode extends LinearOpMode {
                 teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
             else {*/
-                if (!approxEquals(gamepad1.left_stick_y, 0, 0.05)) {
+                if (!approxEquals(gamepad1.left_stick_y, 0, 0.001)) {
                     armLock = false;
-                    teamHardwareMap.bigSpinMotor.setPower(-gamepad1.left_stick_y / 4);
+                    teamHardwareMap.bigSpinMotor.setPower(-gamepad1.left_stick_y / 10);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
                 else if (!armLock) {
                     armLock = true;
-                    teamHardwareMap.bigSpinMotor.setPower(0.05);
+                    teamHardwareMap.bigSpinMotor.setPower(0.1);
                     teamHardwareMap.bigSpinMotor.setTargetPosition(teamHardwareMap.bigSpinMotor.getCurrentPosition());
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 }
@@ -123,6 +147,7 @@ public class ArmOpMode extends LinearOpMode {
             telemetry.addData("(BSM) Going down", goingDown);
             telemetry.addData("(BSM) You have arrived at your destination", youHaveArrivedAtYourDestination);
             telemetry.addData("(SSLS) Position", teamHardwareMap.smallSpinLeftServo.getPosition());
+            telemetry.addData("SPEED", mecanumHelper.speed);
             telemetry.update();
         }
     }

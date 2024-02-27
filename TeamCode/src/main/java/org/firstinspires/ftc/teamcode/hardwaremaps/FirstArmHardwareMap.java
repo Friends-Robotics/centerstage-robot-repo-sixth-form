@@ -23,6 +23,8 @@ public class FirstArmHardwareMap extends TeamHardwareMap {
 
     public CRServo pincerSpinServo;
 
+    public CRServo airplaneLauncherServo;
+
     @Override
     protected void initialise() {
         frontRightMotor = hardwareMap.get(DcMotor.class, "FRW");
@@ -57,5 +59,7 @@ public class FirstArmHardwareMap extends TeamHardwareMap {
         smallSpinRightServo.setDirection(Servo.Direction.FORWARD);
         pincerSpinServo = hardwareMap.get(CRServo.class, "PSS");
         pincerSpinServo.setDirection(CRServo.Direction.FORWARD);
+        airplaneLauncherServo = hardwareMap.get(CRServo.class, "APL");
+        airplaneLauncherServo.setDirection(CRServo.Direction.FORWARD);
     }
 }

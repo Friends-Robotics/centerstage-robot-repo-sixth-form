@@ -53,11 +53,11 @@ public class AutonomousOpMode extends LinearOpMode {
                 mecanumHelper.autonomousMoveLeft();
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
-                    + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE * 2) { // then, two tiles backward
+                    + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
                 mecanumHelper.autonomousBackward();
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
-                     + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE * 2
+                     + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE
                      + 10 * 1000) { // then, 10 seconds to drop pixels
                 mecanumHelper.autonomousStop();
                 // 500 is vertical
@@ -78,7 +78,10 @@ public class AutonomousOpMode extends LinearOpMode {
                 teamHardwareMap.smallSpinRightServo.setPosition(0.6);
                 teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
             }
-            else {
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                     + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE
+                     + 10 * 1000
+                     + 5 * 1000) { // then, 5 seconds to put arm back
                 mecanumHelper.autonomousStop();
                 // 500 is vertical
                 if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 350) {
@@ -97,6 +100,21 @@ public class AutonomousOpMode extends LinearOpMode {
                 teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 teamHardwareMap.smallSpinRightServo.setPosition(0.1);
                 teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
+            }
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                     + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE
+                     + 10 * 1000
+                     + 5 * 1000
+                     + AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile right
+                mecanumHelper.autonomousMoveRight();
+            }
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                    + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE
+                    + 10 * 1000
+                    + 5 * 1000
+                    + AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE
+                    + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
+                mecanumHelper.autonomousBackward();
             }
 
             telemetry.addData("(FRW) Position", teamHardwareMap.frontRightMotor.getCurrentPosition());

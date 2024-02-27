@@ -17,4 +17,4 @@ Pixel outer diameter: 3"
 Pixel inner diameter 1.25"
 Pixel thickness: 0.5"
 
-Vertical arm ticks: X
+Vertical arm ticks: 500

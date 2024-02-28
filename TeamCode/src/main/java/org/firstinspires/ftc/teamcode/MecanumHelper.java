@@ -25,7 +25,7 @@ public class MecanumHelper {
         this.backLeftMotor = backLeftMotor;
         this.frontLeftMotor = frontLeftMotor;
         this.drivingSpeed = 0.5;
-        this.autonomousSpeed = 0.4;
+        this.autonomousSpeed = 0.2;
     }
 
     public void SetMotorPower(Motor motor, double power) {

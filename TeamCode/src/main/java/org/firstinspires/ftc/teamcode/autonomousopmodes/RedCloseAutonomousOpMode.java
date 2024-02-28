@@ -106,6 +106,7 @@ public class RedCloseAutonomousOpMode extends LinearOpMode {
                      + 5 * 1000
                      + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile left
                 mecanumHelper.autonomousMoveLeft();
+                teamHardwareMap.bigSpinMotor.setPower(0.1);
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE
@@ -114,6 +115,9 @@ public class RedCloseAutonomousOpMode extends LinearOpMode {
                     + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE
                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
                 mecanumHelper.autonomousBackward();
+            }
+            else {
+                mecanumHelper.autonomousStop();
             }
 
             telemetry.addData("(FRW) Position", teamHardwareMap.frontRightMotor.getCurrentPosition());

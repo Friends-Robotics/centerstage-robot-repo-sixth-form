@@ -88,6 +88,9 @@ public class CompetitionTeleOpMode extends LinearOpMode {
                 speedChangeLock = true;
                 speedChangeTimer.reset();
                 mecanumHelper.drivingSpeed -= 0.05;
+                if (mecanumHelper.drivingSpeed < 0) {
+                    mecanumHelper.drivingSpeed = 0;
+                }
             }
 
             // ARM
@@ -115,11 +118,11 @@ public class CompetitionTeleOpMode extends LinearOpMode {
             }
             else if (gamepad1.cross) {
                 pincerClosed = true;
-                teamHardwareMap.pincerSpinServo.setPower(1);
+                teamHardwareMap.pincerSpinServo.setPower(0.4);
             }
             else {
                 if (pincerClosed) {
-                    teamHardwareMap.pincerSpinServo.setPower(1);
+                    teamHardwareMap.pincerSpinServo.setPower(0.4);
                 }
                 else {
                     teamHardwareMap.pincerSpinServo.setPower(0);

@@ -65,7 +65,7 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
                 else {
-                    teamHardwareMap.bigSpinMotor.setPower(-0.025);
+                    teamHardwareMap.bigSpinMotor.setPower(-0.05);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
 
@@ -83,11 +83,11 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                 mecanumHelper.autonomousStop();
                 // 500 is vertical
                 if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 500) {
-                    teamHardwareMap.bigSpinMotor.setPower(-0.025);
+                    teamHardwareMap.bigSpinMotor.setPower(0.05);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
                 else {
-                    teamHardwareMap.bigSpinMotor.setPower(0.05);
+                    teamHardwareMap.bigSpinMotor.setPower(-0.05);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
 

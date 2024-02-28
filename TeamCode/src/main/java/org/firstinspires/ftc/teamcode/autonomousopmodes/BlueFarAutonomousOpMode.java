@@ -79,7 +79,7 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
                      + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3
                      + 10 * 1000
-                     + 5 * 1000) { // then, 5 seconds to put arm back
+                     + 10 * 1000) { // then, 10 seconds to put arm back
                 mecanumHelper.autonomousStop();
                 // 500 is vertical
                 if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 500) {
@@ -104,7 +104,7 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
                      + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3
                      + 10 * 1000
-                     + 5 * 1000
+                     + 10 * 1000
                      + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile right
                 mecanumHelper.autonomousMoveRight();
                 teamHardwareMap.bigSpinMotor.setPower(0.1);
@@ -112,7 +112,7 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3
                     + 10 * 1000
-                    + 5 * 1000
+                    + 10 * 1000
                     + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE
                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
                 mecanumHelper.autonomousBackward();

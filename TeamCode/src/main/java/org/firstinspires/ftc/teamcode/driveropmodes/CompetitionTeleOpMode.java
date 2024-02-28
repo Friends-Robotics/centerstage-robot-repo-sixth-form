@@ -65,12 +65,16 @@ public class CompetitionTeleOpMode extends LinearOpMode {
 
             // MOVEMENT
 
+            /* SEPARATE MOVEMENT AND ROTATION
             if (approxEquals(gamepad2.right_stick_x, 0, 0.001)) { // no rotation, move
                 mecanumHelper.move(gamepad2.left_stick_x, -gamepad2.left_stick_y);
             }
             else { // rotate
                 mecanumHelper.rotate(gamepad2.right_stick_x);
             }
+             */
+
+            mecanumHelper.moveandrotate(gamepad2.left_stick_x, -gamepad2.left_stick_y, gamepad2.right_stick_x);
 
             if (speedChangeTimer.milliseconds() > 200) {
                 speedChangeLock = false;

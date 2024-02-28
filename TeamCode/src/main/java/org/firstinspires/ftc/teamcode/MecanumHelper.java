@@ -119,6 +119,13 @@ public class MecanumHelper {
         SetMotorPower(Motor.BRW, -x * turningSlowDownConstant);
     }
 
+    public void moveandrotate(double move_x, double move_y, double rotate_x) {
+        SetMotorPower(Motor.FLW, move_y + move_x + rotate_x);
+        SetMotorPower(Motor.BLW, move_y - move_x + rotate_x);
+        SetMotorPower(Motor.FRW, move_y - move_x - rotate_x);
+        SetMotorPower(Motor.BRW, move_y + move_x - rotate_x);
+    }
+
     public void autonomousForward() {
         SetMotorPowerAutonomous(Motor.BLW, 1);
         SetMotorPowerAutonomous(Motor.BRW, 1);

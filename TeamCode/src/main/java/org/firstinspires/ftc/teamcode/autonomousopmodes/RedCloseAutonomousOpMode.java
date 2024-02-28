@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.AutonomousHelper;
+import org.firstinspires.ftc.teamcode.AutonomousSharedValues;
 import org.firstinspires.ftc.teamcode.MecanumHelper;
 import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
 
@@ -48,15 +48,15 @@ public class RedCloseAutonomousOpMode extends LinearOpMode {
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive()) {
-            if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1) { // one tile right
+            if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1) { // one tile right
                 mecanumHelper.autonomousMoveRight();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
-                    + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
                 mecanumHelper.autonomousBackward();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
-                     + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE
                      + 10 * 1000) { // then, 10 seconds to drop pixels
                 mecanumHelper.autonomousStop();
                 // 500 is vertical
@@ -77,8 +77,8 @@ public class RedCloseAutonomousOpMode extends LinearOpMode {
                 teamHardwareMap.smallSpinRightServo.setPosition(0.6);
                 teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
-                     + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE
                      + 10 * 1000
                      + 5 * 1000) { // then, 5 seconds to put arm back
                 mecanumHelper.autonomousStop();
@@ -100,19 +100,19 @@ public class RedCloseAutonomousOpMode extends LinearOpMode {
                 teamHardwareMap.smallSpinRightServo.setPosition(0.1);
                 teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
-                     + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE
                      + 10 * 1000
                      + 5 * 1000
-                     + AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile left
+                     + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile left
                 mecanumHelper.autonomousMoveLeft();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE * 1
-                    + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
+                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE
                     + 10 * 1000
                     + 5 * 1000
-                    + AutonomousHelper.MILLISECONDS_PER_HORIZONTAL_TILE
-                    + AutonomousHelper.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
+                    + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE
+                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
                 mecanumHelper.autonomousBackward();
             }
 

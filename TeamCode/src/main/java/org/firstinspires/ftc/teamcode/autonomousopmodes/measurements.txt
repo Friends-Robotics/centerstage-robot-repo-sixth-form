@@ -1,9 +1,7 @@
-Distance moved forward in 2 seconds @ 0.4 power: 1870 millimetres RECALCULATE
-Distance moved right in 2 seconds @ 0.4 power: 1560 millimetres RECALCULATE
+Distance moved forward in 2 seconds @ 0.4 power: 1890 millimetres
+Distance moved right in 2 seconds @ 0.4 power: 1500 millimetres
 
 (milliseconds to move one tile) = (23" in millimetres = 584.2) * 2 / (millimetres moved in two seconds) * 1000
-
-THEREFORE: 749 milliseconds to move one tile horizontally, and 625 milliseconds to move one tile vertically
 
 Important playing field measurements:
 Floor to top of truss: 23.5"

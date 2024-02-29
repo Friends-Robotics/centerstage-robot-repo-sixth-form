@@ -52,14 +52,14 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                 teamHardwareMap.bigSpinMotor.setTargetPosition(100);
                 teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000) { // one tile left
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000) { // one tile left
                 mecanumHelper.autonomousMoveLeft();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5) { // then, three tiles backward
                 mecanumHelper.autonomousBackward();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
                      + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
                      + 10 * 1000) { // then, 10 seconds to drop pixels
                 mecanumHelper.autonomousStop();
@@ -84,7 +84,7 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                     }
                 }
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
                      + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
                      + 10 * 1000
                      + 10 * 1000) { // then, 10 seconds to put arm back
@@ -116,21 +116,15 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                     teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
                 }
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
+            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
                      + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
                      + 10 * 1000
                      + 10 * 1000
                      + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile right
-                mecanumHelper.autonomousMoveRight();
+                mecanumHelper.autonomousStop();
+                teamHardwareMap.bigSpinMotor.setTargetPosition(100);
                 teamHardwareMap.bigSpinMotor.setPower(0.1);
-            }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
-                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
-                    + 10 * 1000
-                    + 10 * 1000
-                    + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE
-                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE) { // then, one tile backward
-                mecanumHelper.autonomousBackward();
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
             else {
                 mecanumHelper.autonomousStop();

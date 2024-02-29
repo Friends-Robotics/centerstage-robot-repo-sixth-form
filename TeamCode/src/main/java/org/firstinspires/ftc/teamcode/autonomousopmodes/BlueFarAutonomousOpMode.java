@@ -39,6 +39,8 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
         teamHardwareMap.smallSpinRightServo.setPosition(0.1);
         teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
 
+        teamHardwareMap.pincerSpinServo.setPower(-0.4);
+
         teamHardwareMap.bigSpinMotor.setPower(0.1);
         teamHardwareMap.bigSpinMotor.setTargetPosition(100);
         teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -59,7 +61,7 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                      + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3
                      + 10 * 1000) { // then, 10 seconds to drop pixels
                 mecanumHelper.autonomousStop();
-                // 500 is vertical
+                // 500 is vertical0.1
                 if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 500) {
                     teamHardwareMap.bigSpinMotor.setPower(0.05);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -69,17 +71,22 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
 
-                if (AutonomousSharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 550, 10)) {
+                if (AutonomousSharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 550, 20)) {
                     teamHardwareMap.bigSpinMotor.setTargetPosition(550);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     teamHardwareMap.smallSpinRightServo.setPosition(0.6);
                     teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
+
+                    if (AutonomousSharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 550, 5)) {
+                        teamHardwareMap.pincerSpinServo.setPower(0.1);
+                    }
                 }
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1
                      + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3
                      + 10 * 1000
                      + 10 * 1000) { // then, 10 seconds to put arm back
+                teamHardwareMap.pincerSpinServo.setPower(0);
                 mecanumHelper.autonomousStop();
                 // 500 is vertical
                 if (teamHardwareMap.bigSpinMotor.getCurrentPosition() < 500) {

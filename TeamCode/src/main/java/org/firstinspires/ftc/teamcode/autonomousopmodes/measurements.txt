@@ -1,5 +1,5 @@
-Distance moved forward in 2 seconds @ 0.4 power: 1890 millimetres
-Distance moved right in 2 seconds @ 0.4 power: 1500 millimetres
+Distance moved forward in 2 seconds @ 0.2 power: 970 millimetres
+Distance moved right in 2 seconds @ 0.2 power: 755 millimetres
 
 (milliseconds to move one tile) = (23" in millimetres = 584.2) * 2 / (millimetres moved in two seconds) * 1000
 

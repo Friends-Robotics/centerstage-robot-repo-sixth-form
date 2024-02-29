@@ -74,71 +74,71 @@ public class CompetitionTeleOpMode extends LinearOpMode {
             }
              */
 
-            mecanumHelper.moveandrotate(gamepad2.left_stick_x, -gamepad2.left_stick_y, gamepad2.right_stick_x);
+            if (!(gamepad2.square && gamepad2.cross && gamepad2.triangle && gamepad2.circle))
+            {
+                mecanumHelper.moveandrotate(gamepad2.left_stick_x, -gamepad2.left_stick_y, gamepad2.right_stick_x);
 
-            if (speedChangeTimer.milliseconds() > 200) {
-                speedChangeLock = false;
-            }
-            if (gamepad2.right_bumper && !speedChangeLock) {
-                speedChangeLock = true;
-                speedChangeTimer.reset();
-                mecanumHelper.drivingSpeed += 0.05;
-            }
-            if (gamepad2.left_bumper && !speedChangeLock) {
-                speedChangeLock = true;
-                speedChangeTimer.reset();
-                mecanumHelper.drivingSpeed -= 0.05;
-                if (mecanumHelper.drivingSpeed < 0) {
-                    mecanumHelper.drivingSpeed = 0;
+                if (speedChangeTimer.milliseconds() > 200) {
+                    speedChangeLock = false;
+                }
+                if (gamepad2.right_bumper && !speedChangeLock) {
+                    speedChangeLock = true;
+                    speedChangeTimer.reset();
+                    mecanumHelper.drivingSpeed += 0.05;
+                }
+                if (gamepad2.left_bumper && !speedChangeLock) {
+                    speedChangeLock = true;
+                    speedChangeTimer.reset();
+                    mecanumHelper.drivingSpeed -= 0.05;
+                    if (mecanumHelper.drivingSpeed < 0.11) {
+                        mecanumHelper.drivingSpeed = 0.1;
+                    }
                 }
             }
 
             // ARM
 
-            if (intakeAngleChangeTimer.milliseconds() > 1000) {
-                intakeAngleChangeLock = false;
-            }
-            if ((gamepad1.dpad_down || gamepad1.dpad_up) && !intakeAngleChangeLock) {
-                intakeAngledTowardsBackboard = !intakeAngledTowardsBackboard;
-                intakeAngleChangeLock = true;
-                intakeAngleChangeTimer.reset();
-            }
-            if (intakeAngledTowardsBackboard) {
-                teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
-                teamHardwareMap.smallSpinRightServo.setPosition(0.6);
-            }
-            else {
-                teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
-                teamHardwareMap.smallSpinRightServo.setPosition(0.1);
-            }
+            if (!(gamepad2.square && gamepad2.cross && gamepad2.triangle && gamepad2.circle)) {
+                if (intakeAngleChangeTimer.milliseconds() > 1000) {
+                    intakeAngleChangeLock = false;
+                }
+                if ((gamepad1.dpad_down || gamepad1.dpad_up) && !intakeAngleChangeLock) {
+                    intakeAngledTowardsBackboard = !intakeAngledTowardsBackboard;
+                    intakeAngleChangeLock = true;
+                    intakeAngleChangeTimer.reset();
+                }
+                if (intakeAngledTowardsBackboard) {
+                    teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
+                    teamHardwareMap.smallSpinRightServo.setPosition(0.6);
+                } else {
+                    teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
+                    teamHardwareMap.smallSpinRightServo.setPosition(0.1);
+                }
 
-            if (gamepad1.circle) {
-                pincerClosed = false;
-                teamHardwareMap.pincerSpinServo.setPower(-1);
-            }
-            else if (gamepad1.cross) {
-                pincerClosed = true;
-                teamHardwareMap.pincerSpinServo.setPower(0.4);
-            }
-            else {
-                if (pincerClosed) {
+                if (gamepad1.circle) {
+                    pincerClosed = false;
+                    teamHardwareMap.pincerSpinServo.setPower(-1);
+                } else if (gamepad1.cross) {
+                    pincerClosed = true;
                     teamHardwareMap.pincerSpinServo.setPower(0.4);
+                } else {
+                    if (pincerClosed) {
+                        teamHardwareMap.pincerSpinServo.setPower(0.4);
+                    } else {
+                        teamHardwareMap.pincerSpinServo.setPower(0);
+                    }
                 }
-                else {
-                    teamHardwareMap.pincerSpinServo.setPower(0);
-                }
-            }
 
-            if (!approxEquals(gamepad1.left_stick_y, 0, 0.001)) {
-                armLock = false;
-                teamHardwareMap.bigSpinMotor.setPower(-gamepad1.left_stick_y / 10);
-                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
-            else if (!armLock) {
-                armLock = true;
-                teamHardwareMap.bigSpinMotor.setPower(0.1);
-                teamHardwareMap.bigSpinMotor.setTargetPosition(teamHardwareMap.bigSpinMotor.getCurrentPosition());
-                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                if (!approxEquals(gamepad1.left_stick_y, 0, 0.001)) {
+                    armLock = false;
+                    teamHardwareMap.bigSpinMotor.setPower(-gamepad1.left_stick_y / 10);
+                    teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                } else if (!armLock) {
+                    armLock = true;
+                    teamHardwareMap.bigSpinMotor.setPower(0.1);
+                    teamHardwareMap.bigSpinMotor.setTargetPosition(teamHardwareMap.bigSpinMotor.getCurrentPosition());
+                    teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                }
             }
 
             telemetry.addData("(BSM) Power", teamHardwareMap.bigSpinMotor.getPower());

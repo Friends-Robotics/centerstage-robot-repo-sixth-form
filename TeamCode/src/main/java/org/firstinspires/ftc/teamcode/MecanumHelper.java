@@ -40,7 +40,7 @@ public class MecanumHelper {
                 backLeftMotor.setPower(power * drivingSpeed);
                 break;
             case FLW:
-                frontLeftMotor.setPower(power * drivingSpeed);
+                frontLeftMotor.setPower(power * drivingSpeed * 1.5);
                 break;
         }
     }
@@ -57,7 +57,7 @@ public class MecanumHelper {
                 backLeftMotor.setPower(power * autonomousSpeed);
                 break;
             case FLW:
-                frontLeftMotor.setPower(power * autonomousSpeed);
+                frontLeftMotor.setPower(power * autonomousSpeed * 1.5);
                 break;
         }
     }

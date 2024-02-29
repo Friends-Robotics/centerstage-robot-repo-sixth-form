@@ -48,7 +48,7 @@ public class EncoderTicksMeasurementAutonomousOpMode extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (teamHardwareMap.runTime.milliseconds() < 2 * 1000) {
-                mecanumHelper.autonomousMoveLeft();
+                mecanumHelper.autonomousForward();
             }
             else {
                 mecanumHelper.autonomousStop();

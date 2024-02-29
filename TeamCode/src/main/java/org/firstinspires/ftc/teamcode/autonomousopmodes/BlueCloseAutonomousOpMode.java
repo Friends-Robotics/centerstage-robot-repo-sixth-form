@@ -22,8 +22,8 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="BLUE FAR", group="Linear Opmode")
-public class BlueFarAutonomousOpMode extends LinearOpMode {
+@Autonomous(name="BLUE CLOSE", group="Linear Opmode")
+public class BlueCloseAutonomousOpMode extends LinearOpMode {
 
     private FirstArmHardwareMap teamHardwareMap;
     private MecanumHelper mecanumHelper;
@@ -56,11 +56,11 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                 mecanumHelper.autonomousMoveLeft();
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
-                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5) { // then, three tiles backward
+                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 1.5) { // then, three tiles backward
                 mecanumHelper.autonomousBackward();
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
-                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
+                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 1.5
                      + 10 * 1000) { // then, 10 seconds to drop pixels
                 mecanumHelper.autonomousStop();
                 // 500 is vertical0.1
@@ -85,7 +85,7 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                 }
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
-                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
+                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 1.5
                      + 10 * 1000
                      + 10 * 1000) { // then, 10 seconds to put arm back
                 teamHardwareMap.pincerSpinServo.setPower(0);
@@ -117,15 +117,17 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                 }
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
-                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
+                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 1.5
                      + 10 * 1000
                      + 10 * 1000
                      + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile right
                 mecanumHelper.autonomousMoveRight();
+                teamHardwareMap.bigSpinMotor.setTargetPosition(100);
                 teamHardwareMap.bigSpinMotor.setPower(0.1);
+                teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
             else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1 + 1000
-                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
+                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 1.5
                     + 10 * 1000
                     + 10 * 1000
                     + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE

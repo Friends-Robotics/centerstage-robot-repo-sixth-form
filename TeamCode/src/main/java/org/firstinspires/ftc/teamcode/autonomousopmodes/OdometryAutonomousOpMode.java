@@ -17,7 +17,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * The external encoders we are using are REV through-bore.
  */
 @Autonomous
-@Disabled
 public class OdometryAutonomousOpMode extends LinearOpMode {
 
     // The lateral distance between the left and right odometers

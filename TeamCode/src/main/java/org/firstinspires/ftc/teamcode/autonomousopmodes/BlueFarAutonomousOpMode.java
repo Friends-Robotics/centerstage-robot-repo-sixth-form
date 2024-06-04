@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.AutonomousSharedValues;
+import org.firstinspires.ftc.teamcode.SharedValues;
 import org.firstinspires.ftc.teamcode.MecanumHelper;
 import org.firstinspires.ftc.teamcode.hardwaremaps.FirstArmHardwareMap;
 
@@ -52,15 +52,15 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                 teamHardwareMap.bigSpinMotor.setTargetPosition(100);
                 teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000) { // one tile left
+            else if (teamHardwareMap.runTime.milliseconds() < SharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000) { // one tile left
                 mecanumHelper.autonomousMoveLeft();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
-                    + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5) { // then, three tiles backward
+            else if (teamHardwareMap.runTime.milliseconds() < SharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
+                    + SharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5) { // then, three tiles backward
                 mecanumHelper.autonomousBackward();
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
-                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
+            else if (teamHardwareMap.runTime.milliseconds() < SharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
+                     + SharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
                      + 10 * 1000) { // then, 10 seconds to drop pixels
                 mecanumHelper.autonomousStop();
                 // 500 is vertical0.1
@@ -73,19 +73,19 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
 
-                if (AutonomousSharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 550, 50)) {
+                if (SharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 550, 50)) {
                     teamHardwareMap.bigSpinMotor.setTargetPosition(550);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     teamHardwareMap.smallSpinRightServo.setPosition(0.6);
                     teamHardwareMap.smallSpinLeftServo.setPosition(0.6);
 
-                    if (AutonomousSharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 550, 20)) {
+                    if (SharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 550, 20)) {
                         teamHardwareMap.pincerSpinServo.setPower(-0.3);
                     }
                 }
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
-                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
+            else if (teamHardwareMap.runTime.milliseconds() < SharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
+                     + SharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
                      + 10 * 1000
                      + 10 * 1000) { // then, 10 seconds to put arm back
                 teamHardwareMap.pincerSpinServo.setPower(0);
@@ -106,7 +106,7 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
 
-                if (AutonomousSharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 100, 10)) {
+                if (SharedValues.approxEquals(teamHardwareMap.bigSpinMotor.getCurrentPosition(), 100, 10)) {
                     teamHardwareMap.bigSpinMotor.setTargetPosition(100);
                     teamHardwareMap.bigSpinMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 }
@@ -116,11 +116,11 @@ public class BlueFarAutonomousOpMode extends LinearOpMode {
                     teamHardwareMap.smallSpinLeftServo.setPosition(0.1);
                 }
             }
-            else if (teamHardwareMap.runTime.milliseconds() < AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
-                     + AutonomousSharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
+            else if (teamHardwareMap.runTime.milliseconds() < SharedValues.MILLISECONDS_PER_HORIZONTAL_TILE * 1.125 + 1000
+                     + SharedValues.MILLISECONDS_PER_VERTICAL_TILE * 3.5
                      + 10 * 1000
                      + 10 * 1000
-                     + AutonomousSharedValues.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile right
+                     + SharedValues.MILLISECONDS_PER_HORIZONTAL_TILE) { // then, one tile right
                 mecanumHelper.autonomousStop();
                 teamHardwareMap.bigSpinMotor.setTargetPosition(100);
                 teamHardwareMap.bigSpinMotor.setPower(0.1);

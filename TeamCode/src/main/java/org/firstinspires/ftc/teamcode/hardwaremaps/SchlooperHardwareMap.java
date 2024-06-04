@@ -31,10 +31,10 @@ public class SchlooperHardwareMap extends TeamHardwareMap {
          - PLANE_LAUNCHER: expansion hub servo 0
      */
 
-    public DcMotorEx frontRightMotor;
-    public DcMotorEx backRightMotor;
-    public DcMotorEx backLeftMotor;
-    public DcMotorEx frontLeftMotor;
+    public MotorEx frontRightMotor;
+    public MotorEx backRightMotor;
+    public MotorEx backLeftMotor;
+    public MotorEx frontLeftMotor;
 
     public MotorEx rightOdometerMotorEx;
     public MotorEx leftOdometerMotorEx;
@@ -50,29 +50,10 @@ public class SchlooperHardwareMap extends TeamHardwareMap {
 
     @Override
     protected void initialise() {
-        frontRightMotor = hardwareMap.get(DcMotorEx.class, "FRW");
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        frontLeftMotor = hardwareMap.get(DcMotorEx.class, "FLW");
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        backRightMotor = hardwareMap.get(DcMotorEx.class, "BRW");
-        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        backLeftMotor = hardwareMap.get(DcMotorEx.class, "BLW");
-        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor = new MotorEx(hardwareMap, "FLW");
+        frontRightMotor = new MotorEx(hardwareMap, "FRW");
+        backLeftMotor = new MotorEx(hardwareMap, "BLW");
+        backRightMotor = new MotorEx(hardwareMap, "BRW");
 
         rightOdometerMotorEx = new MotorEx(hardwareMap, "RIGHT_ODOMETER");
         leftOdometerMotorEx = new MotorEx(hardwareMap, "LEFT_ODOMETER");

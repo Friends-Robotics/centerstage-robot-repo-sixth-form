@@ -53,7 +53,7 @@ public class OdometryAutonomousOpMode extends LinearOpMode {
     public static final double TICKS_PER_REV = 8192; //check this
     public static final double DISTANCE_PER_PULSE = Math.PI * WHEEL_DIAMETER / TICKS_PER_REV;
 
-    private MecanumDrive driveTrain;
+    private MecanumDrive mecanumDrive;
     private Encoder leftOdometer, rightOdometer, centerOdometer;
     private HolonomicOdometry odometry;
 
@@ -62,6 +62,8 @@ public class OdometryAutonomousOpMode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         teamHardwareMap = new SchlooperHardwareMap(hardwareMap);
+
+        mecanumDrive = new MecanumDrive(teamHardwareMap.frontLeftMotor, teamHardwareMap.frontRightMotor, teamHardwareMap.backLeftMotor, teamHardwareMap.backRightMotor);
 
         // Here we set the distance per pulse of the odometers.
         // This is to keep the units consistent for the odometry.
@@ -89,13 +91,6 @@ public class OdometryAutonomousOpMode extends LinearOpMode {
 
         RamseteController ramseteController = new RamseteController(1, 0.5);
 
-        MecanumDriveKinematics mecanumDriveKinematics = new MecanumDriveKinematics(
-                new Translation2d((double) SharedValues.AXLE_TRACK / 2, (double) SharedValues.WHEEL_BASE / 2),
-                new Translation2d((double) SharedValues.AXLE_TRACK / 2, (double) SharedValues.WHEEL_BASE / 2),
-                new Translation2d((double) SharedValues.AXLE_TRACK / 2, (double) SharedValues.WHEEL_BASE / 2),
-                new Translation2d((double) SharedValues.AXLE_TRACK / 2, (double) SharedValues.WHEEL_BASE / 2)
-        );
-
         waitForStart();
         teamHardwareMap.runTime.reset();
 
@@ -106,8 +101,7 @@ public class OdometryAutonomousOpMode extends LinearOpMode {
 
             Trajectory.State currentGoal = trajectory.sample(teamHardwareMap.runTime.seconds());
             ChassisSpeeds newChassisSpeeds = ramseteController.calculate(currentPose, currentGoal);
-            MecanumDriveWheelSpeeds newMecanumSpeeds = mecanumDriveKinematics.toWheelSpeeds(newChassisSpeeds);
-            // TODO: apply speeds to wheel motors
+            mecanumDrive.driveRobotCentric(newChassisSpeeds.vxMetersPerSecond, newChassisSpeeds.vyMetersPerSecond, newChassisSpeeds.omegaRadiansPerSecond);
 
             telemetry.addData("Odometry x", currentPose.getX());
             telemetry.addData("Odometry y", currentPose.getY());

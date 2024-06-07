@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.driveropmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
+import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
 
 
 /**
@@ -19,38 +19,21 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="CAMBRIDGE", group="Linear Opmode")
-public class CambridgeTeleOpMode extends LinearOpMode {
+@TeleOp(name="BRISTLE IN TEST", group="Linear Opmode")
+public class BristleOutTestTeleOp extends LinearOpMode {
 
-    private TestHardwareMap teamHardwareMap;
+    private CambridgeHardwareMap teamHardwareMap;
 
     @Override
     public void runOpMode() {
-        teamHardwareMap = new TestHardwareMap(hardwareMap);
+        teamHardwareMap = new CambridgeHardwareMap(hardwareMap);
 
         waitForStart();
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive())
         {
-            if (teamHardwareMap.runTime.milliseconds() < 1000) {
-                teamHardwareMap.testServo.setPosition(-1);
-            }
-            else if (teamHardwareMap.runTime.milliseconds() < 2000) {
-                teamHardwareMap.testServo.setPosition(1);
-            }
-            else if (teamHardwareMap.runTime.milliseconds() < 3000) {
-                teamHardwareMap.testServo.setPosition(-1);
-            }
-            else if (teamHardwareMap.runTime.milliseconds() < 4000) {
-                teamHardwareMap.testServo.setPosition(1);
-            }
-
-            telemetry.update();
+            teamHardwareMap.bristlesMotor.setPower(-0.75);
         }
-    }
-
-    private boolean approxEquals(double a, double b, double tolerance) {
-        return Math.abs(a - b) < tolerance;
     }
 }

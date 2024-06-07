@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode.hardwaremaps;
 
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorImplEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class SchlooperHardwareMap extends TeamHardwareMap {
-    public SchlooperHardwareMap(HardwareMap hardwareMap) {
+public class CambridgeHardwareMap extends TeamHardwareMap {
+    public CambridgeHardwareMap(HardwareMap hardwareMap) {
         super(hardwareMap);
     }
 
@@ -31,21 +28,25 @@ public class SchlooperHardwareMap extends TeamHardwareMap {
          - PLANE_LAUNCHER: expansion hub servo 0
      */
 
+
+    // Driving motors
     public MotorEx frontRightMotor;
     public MotorEx backRightMotor;
     public MotorEx backLeftMotor;
     public MotorEx frontLeftMotor;
 
+    // Odometery
     public MotorEx rightOdometerMotorEx;
     public MotorEx leftOdometerMotorEx;
     public MotorEx centreOdometerMotorEx;
 
+    // Schlooper
     public DcMotor slideMotor;
     public Servo bucketRotationServo;
     public Servo bucketLockServo;
-
     public DcMotor bristlesMotor;
 
+    // Guided Missile
     public Servo planeLauncherServo;
 
     @Override

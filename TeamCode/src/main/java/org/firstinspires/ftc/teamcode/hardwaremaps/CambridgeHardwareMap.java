@@ -28,25 +28,21 @@ public class CambridgeHardwareMap extends TeamHardwareMap {
          - PLANE_LAUNCHER: expansion hub servo 0
      */
 
-
-    // Driving motors
     public MotorEx frontRightMotor;
     public MotorEx backRightMotor;
     public MotorEx backLeftMotor;
     public MotorEx frontLeftMotor;
 
-    // Odometery
     public MotorEx rightOdometerMotorEx;
     public MotorEx leftOdometerMotorEx;
     public MotorEx centreOdometerMotorEx;
 
-    // Schlooper
     public DcMotor slideMotor;
     public Servo bucketRotationServo;
     public Servo bucketLockServo;
+
     public DcMotor bristlesMotor;
 
-    // Guided Missile
     public Servo planeLauncherServo;
 
     @Override

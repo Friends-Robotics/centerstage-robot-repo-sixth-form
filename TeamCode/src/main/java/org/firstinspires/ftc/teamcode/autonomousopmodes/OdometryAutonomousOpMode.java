@@ -74,7 +74,7 @@ public class OdometryAutonomousOpMode extends LinearOpMode {
                 TRACKWIDTH, CENTER_WHEEL_OFFSET
         );
 
-        TrajectoryConfig trajectoryConfig = new TrajectoryConfig(1, 5);
+        TrajectoryConfig trajectoryConfig = new TrajectoryConfig(0.5, 0.3);
 
         List<Pose2d> waypoints = new ArrayList<>();
         waypoints.add(new Pose2d(0, 0, new Rotation2d(0)));

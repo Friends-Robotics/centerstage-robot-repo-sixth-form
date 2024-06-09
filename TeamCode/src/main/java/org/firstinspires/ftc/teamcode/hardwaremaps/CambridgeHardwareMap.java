@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardwaremaps;
 
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -37,7 +38,7 @@ public class CambridgeHardwareMap extends TeamHardwareMap {
     public MotorEx leftOdometerMotorEx;
     public MotorEx centreOdometerMotorEx;
 
-    public DcMotor slideMotor;
+    public DcMotorEx slideMotor;
     public Servo bucketRotationServo;
     public Servo bucketLockServo;
 
@@ -56,7 +57,7 @@ public class CambridgeHardwareMap extends TeamHardwareMap {
         leftOdometerMotorEx = new MotorEx(hardwareMap, "LEFT_ODOMETER");
         centreOdometerMotorEx = new MotorEx(hardwareMap, "BRISTLES_MOTOR");
 
-        slideMotor = hardwareMap.get(DcMotor.class, "SLIDE_MOTOR");
+        slideMotor = hardwareMap.get(DcMotorEx.class, "SLIDE_MOTOR");
         slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -68,9 +69,7 @@ public class CambridgeHardwareMap extends TeamHardwareMap {
         bucketLockServo.setDirection(Servo.Direction.FORWARD);
 
         bristlesMotor = hardwareMap.get(DcMotor.class, "BRISTLES_MOTOR");
-        bristlesMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        bristlesMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bristlesMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bristlesMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         bristlesMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         planeLauncherServo = hardwareMap.get(Servo.class, "PLANE_LAUNCHER");

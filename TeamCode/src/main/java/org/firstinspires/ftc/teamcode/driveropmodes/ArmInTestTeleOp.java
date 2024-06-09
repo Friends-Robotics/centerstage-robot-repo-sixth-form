@@ -33,7 +33,8 @@ public class ArmInTestTeleOp extends LinearOpMode {
 
         while (opModeIsActive())
         {
-            teamHardwareMap.slideMotor.setPower(0.5);
+            teamHardwareMap.slideMotor.setPower(0.4);
+            telemetry.addData("The motor is currently at the position: ", teamHardwareMap.slideMotor.getCurrentPosition());
         }
     }
 }

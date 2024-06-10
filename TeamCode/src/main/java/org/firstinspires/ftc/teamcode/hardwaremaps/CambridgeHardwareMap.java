@@ -29,48 +29,78 @@ public class CambridgeHardwareMap extends TeamHardwareMap {
          - PLANE_LAUNCHER: control hub servo 0
      */
 
-    public MotorEx frontRightMotor;
-    public MotorEx backRightMotor;
-    public MotorEx backLeftMotor;
-    public MotorEx frontLeftMotor;
+    public DcMotorEx frontRightMotor;
+    public DcMotorEx backRightMotor;
+    public DcMotorEx backLeftMotor;
+    public DcMotorEx frontLeftMotor;
 
-    public MotorEx rightOdometerMotorEx;
-    public MotorEx leftOdometerMotorEx;
-    public MotorEx centreOdometerMotorEx;
+    public DcMotorEx rightOdometerMotorEx;
+    public DcMotorEx leftOdometerMotorEx;
+    public DcMotorEx centreOdometerMotorEx;
 
-    public MotorEx slideMotor;
+    public DcMotorEx slideMotor;
     public Servo bucketRotationServo;
     public Servo bucketLockServo;
 
-    public MotorEx bristlesMotor;
+    public DcMotorEx bristlesMotor;
 
     public Servo planeLauncherServo;
 
     @Override
     protected void initialise() {
-        frontLeftMotor = new MotorEx(hardwareMap, "FLW");
-        frontLeftMotor.setInverted(true);
-        frontRightMotor = new MotorEx(hardwareMap, "FRW");
-        backLeftMotor = new MotorEx(hardwareMap, "BLW");
-        backLeftMotor.setInverted(true);
-        backRightMotor = new MotorEx(hardwareMap, "BRW");
-        backRightMotor.setInverted(true);
+        frontLeftMotor = hardwareMap.get(DcMotorEx.class, "FLW");
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor = hardwareMap.get(DcMotorEx.class, "FRW");
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor = hardwareMap.get(DcMotorEx.class, "BLW");
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor = hardwareMap.get(DcMotorEx.class, "BRW");
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        rightOdometerMotorEx = new MotorEx(hardwareMap, "RIGHT_ODOMETER");
-        rightOdometerMotorEx.stopAndResetEncoder();
-        leftOdometerMotorEx = new MotorEx(hardwareMap, "LEFT_ODOMETER");
-        leftOdometerMotorEx.stopAndResetEncoder();
-        centreOdometerMotorEx = new MotorEx(hardwareMap, "BRISTLES_MOTOR");
-        centreOdometerMotorEx.stopAndResetEncoder();
+        rightOdometerMotorEx = hardwareMap.get(DcMotorEx.class, "RIGHT_ODOMETER");
+        rightOdometerMotorEx.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightOdometerMotorEx.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightOdometerMotorEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightOdometerMotorEx.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftOdometerMotorEx = hardwareMap.get(DcMotorEx.class, "LEFT_ODOMETER");
+        leftOdometerMotorEx.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftOdometerMotorEx.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftOdometerMotorEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftOdometerMotorEx.setDirection(DcMotorSimple.Direction.FORWARD);
+        centreOdometerMotorEx = hardwareMap.get(DcMotorEx.class, "BRISTLES_MOTOR");
+        centreOdometerMotorEx.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        centreOdometerMotorEx.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        centreOdometerMotorEx.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        centreOdometerMotorEx.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        slideMotor = new MotorEx(hardwareMap, "SLIDE_MOTOR");
+        slideMotor = hardwareMap.get(DcMotorEx.class, "SLIDE_MOTOR");
+        slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         bucketRotationServo = hardwareMap.get(Servo.class, "BUCKET_ROTATION_SERVO");
         bucketRotationServo.setDirection(Servo.Direction.FORWARD);
         bucketLockServo = hardwareMap.get(Servo.class, "BUCKET_LOCK_SERVO");
         bucketLockServo.setDirection(Servo.Direction.FORWARD);
 
-        bristlesMotor = new MotorEx(hardwareMap, "BRISTLES_MOTOR");
+        bristlesMotor = hardwareMap.get(DcMotorEx.class, "BRISTLES_MOTOR");
+        bristlesMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bristlesMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bristlesMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bristlesMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         planeLauncherServo = hardwareMap.get(Servo.class, "PLANE_LAUNCHER");
         planeLauncherServo.setDirection(Servo.Direction.FORWARD);

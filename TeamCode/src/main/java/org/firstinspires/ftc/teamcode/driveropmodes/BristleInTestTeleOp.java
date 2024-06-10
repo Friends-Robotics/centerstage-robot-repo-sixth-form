@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
-import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
 
 
 /**
@@ -20,10 +19,10 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="CAMBRIDGE", group="Linear Opmode")
-public class CambridgeTeleOpMode extends LinearOpMode {
+@TeleOp(name="BRISTLE IN TEST", group="Linear Opmode")
+public class BristleInTestTeleOp extends LinearOpMode {
 
-    private  CambridgeHardwareMap teamHardwareMap;
+    private CambridgeHardwareMap teamHardwareMap;
 
     @Override
     public void runOpMode() {
@@ -34,7 +33,7 @@ public class CambridgeTeleOpMode extends LinearOpMode {
 
         while (opModeIsActive())
         {
-            telemetry.update();
+            teamHardwareMap.bristlesMotor.setPower(-0.75);
         }
     }
 }

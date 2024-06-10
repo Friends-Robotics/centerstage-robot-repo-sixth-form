@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
-import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
 
 
 /**
@@ -20,10 +19,10 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="CAMBRIDGE", group="Linear Opmode")
-public class CambridgeTeleOpMode extends LinearOpMode {
+@TeleOp(name="ARM IN TEST", group="Linear Opmode")
+public class ArmInTestTeleOp extends LinearOpMode {
 
-    private  CambridgeHardwareMap teamHardwareMap;
+    private CambridgeHardwareMap teamHardwareMap;
 
     @Override
     public void runOpMode() {
@@ -34,7 +33,8 @@ public class CambridgeTeleOpMode extends LinearOpMode {
 
         while (opModeIsActive())
         {
-            telemetry.update();
+            teamHardwareMap.slideMotor.setPower(0.4);
+            telemetry.addData("The motor is currently at the position: ", teamHardwareMap.slideMotor.getCurrentPosition());
         }
     }
 }

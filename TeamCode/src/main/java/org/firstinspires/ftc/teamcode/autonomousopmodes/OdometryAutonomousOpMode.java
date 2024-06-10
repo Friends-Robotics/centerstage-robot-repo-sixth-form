@@ -4,24 +4,17 @@ import com.arcrobotics.ftclib.controller.wpilibcontroller.RamseteController;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
-import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.Motor.Encoder;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
-import com.arcrobotics.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
-import com.arcrobotics.ftclib.kinematics.wpilibkinematics.MecanumDriveWheelSpeeds;
 import com.arcrobotics.ftclib.trajectory.Trajectory;
 import com.arcrobotics.ftclib.trajectory.TrajectoryConfig;
 import com.arcrobotics.ftclib.trajectory.TrajectoryGenerator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.SharedValues;
-import org.firstinspires.ftc.teamcode.hardwaremaps.SchlooperHardwareMap;
+import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,11 +50,11 @@ public class OdometryAutonomousOpMode extends LinearOpMode {
     private Encoder leftOdometer, rightOdometer, centerOdometer;
     private HolonomicOdometry odometry;
 
-    private SchlooperHardwareMap teamHardwareMap;
+    private CambridgeHardwareMap teamHardwareMap;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        teamHardwareMap = new SchlooperHardwareMap(hardwareMap);
+        teamHardwareMap = new CambridgeHardwareMap(hardwareMap);
 
         mecanumDrive = new MecanumDrive(teamHardwareMap.frontLeftMotor, teamHardwareMap.frontRightMotor, teamHardwareMap.backLeftMotor, teamHardwareMap.backRightMotor);
 
@@ -81,7 +74,7 @@ public class OdometryAutonomousOpMode extends LinearOpMode {
                 TRACKWIDTH, CENTER_WHEEL_OFFSET
         );
 
-        TrajectoryConfig trajectoryConfig = new TrajectoryConfig(1, 5);
+        TrajectoryConfig trajectoryConfig = new TrajectoryConfig(0.5, 0.3);
 
         List<Pose2d> waypoints = new ArrayList<>();
         waypoints.add(new Pose2d(0, 0, new Rotation2d(0)));

@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
-import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
 
 
 /**
@@ -20,10 +19,10 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="CAMBRIDGE", group="Linear Opmode")
-public class CambridgeTeleOpMode extends LinearOpMode {
+@TeleOp(name="ARM TEST", group="Linear Opmode")
+public class ArmTestTeleOp extends LinearOpMode {
 
-    private  CambridgeHardwareMap teamHardwareMap;
+    private CambridgeHardwareMap teamHardwareMap;
 
     @Override
     public void runOpMode() {
@@ -32,8 +31,16 @@ public class CambridgeTeleOpMode extends LinearOpMode {
         waitForStart();
         teamHardwareMap.runTime.reset();
 
+        double power = 0.4;
+
         while (opModeIsActive())
         {
+            if(gamepad1.dpad_up) teamHardwareMap.slideMotor.setPower(-power);
+            else if(gamepad1.dpad_down) teamHardwareMap.slideMotor.setPower(power);
+            else teamHardwareMap.slideMotor.setPower(0);
+
+            telemetry.addLine("Press the dpad up to extend\nPress the dpad down to contract\nChange the \'power\' variable in code to test the power");
+            telemetry.addData("The motor is currently at the position: ", teamHardwareMap.slideMotor.getCurrentPosition());
             telemetry.update();
         }
     }

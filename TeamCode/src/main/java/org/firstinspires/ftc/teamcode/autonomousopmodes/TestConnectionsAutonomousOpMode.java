@@ -14,7 +14,6 @@ import com.arcrobotics.ftclib.trajectory.TrajectoryGenerator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.SharedValues;
 import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
 
 import java.util.ArrayList;
@@ -28,19 +27,19 @@ import java.util.List;
  * The external encoders we are using are REV through-bore.
  */
 @Autonomous
-public class OdometryAutonomousOpMode extends LinearOpMode {
+public class TestConnectionsAutonomousOpMode extends LinearOpMode {
 
     // The lateral distance between the left and right odometers
     // is called the trackwidth. This is very important for
     // determining angle for turning approximations
-    public static final double TRACKWIDTH = 155; //millimetres
+    public static final double TRACKWIDTH = 158; //millimetres
 
     // Center wheel offset is the distance between the
     // center of rotation of the robot and the center odometer.
     // This is to correct for the error that might occur when turning.
     // A negative offset means the odometer is closer to the back,
     // while a positive offset means it is closer to the front.
-    public static final double CENTER_WHEEL_OFFSET = -165; //millimetres
+    public static final double CENTER_WHEEL_OFFSET = -167; //millimetres
 
     public static final double WHEEL_DIAMETER = 60; //millimetres
     // if needed, one can add a gearing term here
@@ -57,45 +56,41 @@ public class OdometryAutonomousOpMode extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         teamHardwareMap = new CambridgeHardwareMap(hardwareMap);
 
-        teamHardwareMap.frontRightMotor.setInverted(true);
-        teamHardwareMap.backRightMotor.setInverted(false);
-        mecanumDrive = new MecanumDrive(teamHardwareMap.frontLeftMotor, teamHardwareMap.frontRightMotor, teamHardwareMap.backLeftMotor, teamHardwareMap.backRightMotor);
-
-        // Here we set the distance per pulse of the odometers.
-        // This is to keep the units consistent for the odometry.
-        // *** MOTOR'S ENCODERS ARE WIRED TO THE ODOMETERS ***
-        leftOdometer = teamHardwareMap.leftOdometerMotorEx.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
-        rightOdometer = teamHardwareMap.rightOdometerMotorEx.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
-        centerOdometer = teamHardwareMap.centreOdometerMotorEx.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
-
-        rightOdometer.setDirection(Motor.Direction.REVERSE);
-
-        odometry = new HolonomicOdometry(
-                leftOdometer::getDistance,
-                rightOdometer::getDistance,
-                centerOdometer::getDistance,
-                TRACKWIDTH, CENTER_WHEEL_OFFSET
-        );
-
         waitForStart();
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive() && !isStopRequested()) {
-            // control loop
-            odometry.updatePose(); // update the position
-            Pose2d currentPose = odometry.getPose();
+            if (teamHardwareMap.runTime.milliseconds() < 500) {
+                teamHardwareMap.frontLeftMotor.setVelocity(1000);
+                teamHardwareMap.frontRightMotor.setVelocity(0);
+                teamHardwareMap.backLeftMotor.setVelocity(0);
+                teamHardwareMap.backRightMotor.setVelocity(0);
+            }
+            else if (teamHardwareMap.runTime.milliseconds() < 1000) {
+                teamHardwareMap.frontLeftMotor.setVelocity(0);
+                teamHardwareMap.frontRightMotor.setVelocity(1000);
+                teamHardwareMap.backLeftMotor.setVelocity(0);
+                teamHardwareMap.backRightMotor.setVelocity(0);
+            }
+            else if (teamHardwareMap.runTime.milliseconds() < 1500) {
+                teamHardwareMap.frontLeftMotor.setVelocity(0);
+                teamHardwareMap.frontRightMotor.setVelocity(0);
+                teamHardwareMap.backLeftMotor.setVelocity(1000);
+                teamHardwareMap.backRightMotor.setVelocity(0);
+            }
+            else if (teamHardwareMap.runTime.milliseconds() < 2000) {
+                teamHardwareMap.frontLeftMotor.setVelocity(0);
+                teamHardwareMap.frontRightMotor.setVelocity(0);
+                teamHardwareMap.backLeftMotor.setVelocity(0);
+                teamHardwareMap.backRightMotor.setVelocity(1000);
+            }
+            else {
+                teamHardwareMap.frontLeftMotor.setVelocity(0);
+                teamHardwareMap.frontRightMotor.setVelocity(0);
+                teamHardwareMap.backLeftMotor.setVelocity(0);
+                teamHardwareMap.backRightMotor.setVelocity(0);
+            }
 
-            Pose2d end = new Pose2d(1500, 0, new Rotation2d(0));
-            Pose2d displacementVector = SharedValues.calculateDisplacementVector(currentPose, end);
-
-            mecanumDrive.driveRobotCentric(displacementVector.getY() / 3, displacementVector.getX() / 3, 0);
-
-            telemetry.addData("Odometry x", currentPose.getX());
-            telemetry.addData("Odometry y", currentPose.getY());
-            telemetry.addData("Odometry heading", currentPose.getHeading());
-            telemetry.addData("Runtime milliseconds", teamHardwareMap.runTime.milliseconds());
-            telemetry.addData("Displacement vector x", displacementVector.getX());
-            telemetry.addData("Displacement vector y", displacementVector.getY());
             telemetry.update();
         }
     }

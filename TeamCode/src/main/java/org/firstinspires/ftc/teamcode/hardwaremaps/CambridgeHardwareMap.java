@@ -49,13 +49,19 @@ public class CambridgeHardwareMap extends TeamHardwareMap {
     @Override
     protected void initialise() {
         frontLeftMotor = new MotorEx(hardwareMap, "FLW");
+        frontLeftMotor.setInverted(true);
         frontRightMotor = new MotorEx(hardwareMap, "FRW");
         backLeftMotor = new MotorEx(hardwareMap, "BLW");
+        backLeftMotor.setInverted(true);
         backRightMotor = new MotorEx(hardwareMap, "BRW");
+        backRightMotor.setInverted(true);
 
         rightOdometerMotorEx = new MotorEx(hardwareMap, "RIGHT_ODOMETER");
+        rightOdometerMotorEx.stopAndResetEncoder();
         leftOdometerMotorEx = new MotorEx(hardwareMap, "LEFT_ODOMETER");
+        leftOdometerMotorEx.stopAndResetEncoder();
         centreOdometerMotorEx = new MotorEx(hardwareMap, "BRISTLES_MOTOR");
+        centreOdometerMotorEx.stopAndResetEncoder();
 
         slideMotor = new MotorEx(hardwareMap, "SLIDE_MOTOR");
 

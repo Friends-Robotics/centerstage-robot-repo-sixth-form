@@ -13,3 +13,19 @@ Pixel inner diameter 1.25"
 Pixel thickness: 0.5"
 
 Vertical arm ticks: 500
+
+------------------------------------------------------------
+
+CAMBRIDGE
+
+2970mm over 7 seconds at 500 ticks per second
+therefore
+2970mm from 3500 ticks
+therefore
+0.84857mm per tick
+
+1810mm from 2500 ticks
+therefore
+0.732mm per tick
+
+let's just go with 0.8mm/tick frfr

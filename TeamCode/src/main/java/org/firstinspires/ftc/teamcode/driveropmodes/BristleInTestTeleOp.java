@@ -33,7 +33,7 @@ public class BristleInTestTeleOp extends LinearOpMode {
 
         while (opModeIsActive())
         {
-            teamHardwareMap.bristlesMotor.setPower(-0.75);
+            teamHardwareMap.bristlesMotor.setVelocity(-0.75);
         }
     }
 }

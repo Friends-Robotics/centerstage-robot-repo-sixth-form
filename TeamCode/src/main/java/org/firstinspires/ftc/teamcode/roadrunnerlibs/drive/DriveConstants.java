@@ -47,7 +47,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.8898; // in
     public static double GEAR_RATIO = 12; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 6.1023622047; // in TODO: this is the encoder track width, should be the mecanum track width
+    public static double TRACK_WIDTH = 15.3543307087; // in (390mm)
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using

@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.driveropmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.SharedValues;
 import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
 import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
 
@@ -29,40 +31,65 @@ public class CambridgeTeleOpMode extends LinearOpMode {
     public void runOpMode() {
         teamHardwareMap = new CambridgeHardwareMap(hardwareMap);
 
+        // Some setup stuff for hardware
+        telemetry.addLine("Game pad 1 controls the arm and bristles, game pad 2 controls driving");
+        telemetry.addLine("DO NOT start using this opmode until you have ensured the following...\n" +
+                "Arm is in the lowest position\n" +
+                "Bucket is in the correct position\n" +
+                "Lock is on the bucket\n" +
+                "Plane launcher is primed\n" +
+                "Ramp is in the correct position");
+        telemetry.update();
+
         waitForStart();
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive())
         {
-            // Arm and Bristles
-            GamePad1();
+            // gamepad1 controls the arm and bristles
+            armBristles();
 
-            // Motion
+            // gamepad2 controls the driving
+            telemetry.update();
         }
     }
 
-    public void GamePad1(){
-        if(teamHardwareMap.slideMotor.getCurrentPosition() < -1500) teamHardwareMap.bucketRotationServo.setPosition(0.5);
+
+    public void armBristles(){
+        // Bristles
+        if(gamepad1.left_bumper) teamHardwareMap.bristlesMotor.setPower(1);
+        else if(gamepad1.right_bumper) teamHardwareMap.bristlesMotor.setPower(-1);
+        else teamHardwareMap.bristlesMotor.setPower(0);
+
+        // Servos
+        if(teamHardwareMap.slideMotor.getCurrentPosition() > 1500) teamHardwareMap.bucketRotationServo.setPosition(0.5);
         else teamHardwareMap.bucketRotationServo.setPosition(1);
 
-        double bristlePower = 0;
-        if(gamepad1.left_bumper) bristlePower = -0.75;
-        else if(gamepad1.right_bumper) bristlePower = 0.75;
+        if(gamepad1.cross) teamHardwareMap.bucketLockServo.setPosition(1);
+        else teamHardwareMap.bucketLockServo.setPosition(-1);
 
-        teamHardwareMap.bristlesMotor.setPower(bristlePower);
+        if(gamepad1.square) {
+            teamHardwareMap.slideMotor.setTargetPosition(7);
+            teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            teamHardwareMap.slideMotor.setPower(0.6);
+            return;
+        }
+        else if(gamepad1.triangle) {
+            teamHardwareMap.slideMotor.setTargetPosition(2000);
+            teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            teamHardwareMap.slideMotor.setPower(0.6);
+            return;
+        }
+        else if(gamepad1.circle) {
+            teamHardwareMap.slideMotor.setTargetPosition(4000);
+            teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            teamHardwareMap.slideMotor.setPower(0.6);
+            return;
+        }
 
-        if(gamepad1.square) teamHardwareMap.slideMotor.setTargetPosition(0);
-        else if(gamepad1.triangle) teamHardwareMap.slideMotor.setTargetPosition(-2500);
-        else if(gamepad1.circle) teamHardwareMap.slideMotor.setTargetPosition(-4000);
-
-
-        if(gamepad1.cross) teamHardwareMap.bucketLockServo.setPosition(0);
-        else teamHardwareMap.bucketLockServo.setPosition(1);
-
-
-        if(gamepad1.dpad_up) teamHardwareMap.slideMotor.setPower(-0.4);
-        else if(gamepad1.dpad_down) teamHardwareMap.slideMotor.setPower(0.4);
+        teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        if(gamepad1.dpad_up && teamHardwareMap.slideMotor.getCurrentPosition() < 4100) teamHardwareMap.slideMotor.setPower(0.4);
+        else if(gamepad1.dpad_down && teamHardwareMap.slideMotor.getCurrentPosition() >= 5) teamHardwareMap.slideMotor.setPower(-0.4);
         else teamHardwareMap.slideMotor.setPower(0);
     }
-
 }

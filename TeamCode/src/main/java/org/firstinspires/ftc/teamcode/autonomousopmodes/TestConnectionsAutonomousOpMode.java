@@ -60,29 +60,29 @@ public class TestConnectionsAutonomousOpMode extends LinearOpMode {
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive() && !isStopRequested()) {
-            if (teamHardwareMap.runTime.milliseconds() < 500) {
-                teamHardwareMap.frontLeftMotor.setVelocity(1000);
-                teamHardwareMap.frontRightMotor.setVelocity(0);
-                teamHardwareMap.backLeftMotor.setVelocity(0);
-                teamHardwareMap.backRightMotor.setVelocity(0);
+            if (teamHardwareMap.runTime.milliseconds() < 2000) {
+                teamHardwareMap.frontLeftMotor.setVelocity(3000);
+                teamHardwareMap.frontRightMotor.setVelocity(3000);
+                teamHardwareMap.backLeftMotor.setVelocity(3000);
+                teamHardwareMap.backRightMotor.setVelocity(3000);
             }
-            else if (teamHardwareMap.runTime.milliseconds() < 1000) {
-                teamHardwareMap.frontLeftMotor.setVelocity(0);
-                teamHardwareMap.frontRightMotor.setVelocity(1000);
-                teamHardwareMap.backLeftMotor.setVelocity(0);
-                teamHardwareMap.backRightMotor.setVelocity(0);
+            else if (teamHardwareMap.runTime.milliseconds() < 4000) {
+                teamHardwareMap.frontLeftMotor.setVelocity(-3000);
+                teamHardwareMap.frontRightMotor.setVelocity(-3000);
+                teamHardwareMap.backLeftMotor.setVelocity(-3000);
+                teamHardwareMap.backRightMotor.setVelocity(-3000);
             }
-            else if (teamHardwareMap.runTime.milliseconds() < 1500) {
-                teamHardwareMap.frontLeftMotor.setVelocity(0);
-                teamHardwareMap.frontRightMotor.setVelocity(0);
-                teamHardwareMap.backLeftMotor.setVelocity(1000);
-                teamHardwareMap.backRightMotor.setVelocity(0);
+            else if (teamHardwareMap.runTime.milliseconds() < 6000) {
+                teamHardwareMap.frontLeftMotor.setVelocity(3000);
+                teamHardwareMap.frontRightMotor.setVelocity(3000);
+                teamHardwareMap.backLeftMotor.setVelocity(3000);
+                teamHardwareMap.backRightMotor.setVelocity(3000);
             }
-            else if (teamHardwareMap.runTime.milliseconds() < 2000) {
-                teamHardwareMap.frontLeftMotor.setVelocity(0);
-                teamHardwareMap.frontRightMotor.setVelocity(0);
-                teamHardwareMap.backLeftMotor.setVelocity(0);
-                teamHardwareMap.backRightMotor.setVelocity(1000);
+            else if (teamHardwareMap.runTime.milliseconds() < 8000) {
+                teamHardwareMap.frontLeftMotor.setVelocity(-3000);
+                teamHardwareMap.frontRightMotor.setVelocity(-3000);
+                teamHardwareMap.backLeftMotor.setVelocity(-3000);
+                teamHardwareMap.backRightMotor.setVelocity(-3000);
             }
             else {
                 teamHardwareMap.frontLeftMotor.setVelocity(0);

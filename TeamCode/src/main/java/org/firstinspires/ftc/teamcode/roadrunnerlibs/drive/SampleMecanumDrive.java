@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
 import org.firstinspires.ftc.teamcode.roadrunnerlibs.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.roadrunnerlibs.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.roadrunnerlibs.trajectorysequence.TrajectorySequenceRunner;
@@ -79,6 +80,8 @@ public class SampleMecanumDrive extends MecanumDrive {
     public SampleMecanumDrive(HardwareMap hardwareMap) {
         super(DriveConstants.kV, DriveConstants.kA, DriveConstants.kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
+        CambridgeHardwareMap teamHardwareMap = new CambridgeHardwareMap(hardwareMap);
+
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
@@ -90,10 +93,10 @@ public class SampleMecanumDrive extends MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront = teamHardwareMap.frontLeftMotor;
+        leftRear = teamHardwareMap.backLeftMotor;
+        rightRear = teamHardwareMap.backRightMotor;
+        rightFront = teamHardwareMap.frontRightMotor;
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 

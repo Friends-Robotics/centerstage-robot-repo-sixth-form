@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardwaremaps;
 
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -33,6 +34,11 @@ public class CambridgeHardwareMap extends TeamHardwareMap {
     public DcMotorEx backRightMotor;
     public DcMotorEx backLeftMotor;
     public DcMotorEx frontLeftMotor;
+
+    public Motor frontRightMotorFtcLib;
+    public Motor backRightMotorFtcLib;
+    public Motor backLeftMotorFtcLib;
+    public Motor frontLeftMotorFtcLib;
 
     public DcMotorEx rightOdometerMotorEx;
     public DcMotorEx leftOdometerMotorEx;

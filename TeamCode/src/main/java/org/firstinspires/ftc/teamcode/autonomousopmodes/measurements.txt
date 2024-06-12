@@ -29,3 +29,14 @@ therefore
 0.732mm per tick
 
 let's just go with 0.8mm/tick frfr
+
+------------------------------------------------------------
+
+ROAD RUNNER
+
+kV = 0.009
+kA = 0.002
+
+max vel = 50
+max acc = 100
+dist = 125

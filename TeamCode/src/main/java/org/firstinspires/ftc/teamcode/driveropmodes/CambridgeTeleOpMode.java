@@ -34,7 +34,9 @@ public class CambridgeTeleOpMode extends LinearOpMode {
 
         while (opModeIsActive())
         {
-            telemetry.update();
+            // Arm and Bristles
+
+            // Motion
         }
     }
 }

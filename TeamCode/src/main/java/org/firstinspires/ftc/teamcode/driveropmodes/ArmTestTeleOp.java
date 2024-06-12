@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.roadrunnerlibs.driveropmodes;
+package org.firstinspires.ftc.teamcode.driveropmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -35,12 +35,16 @@ public class ArmTestTeleOp extends LinearOpMode {
 
         while (opModeIsActive())
         {
-            if(gamepad1.dpad_up) teamHardwareMap.slideMotor.setVelocity(-power);
-            else if(gamepad1.dpad_down) teamHardwareMap.slideMotor.setVelocity(power);
-            else teamHardwareMap.slideMotor.setVelocity(0);
+            if(gamepad1.dpad_up) teamHardwareMap.slideMotor.setPower(-power);
+            else if(gamepad1.dpad_down) teamHardwareMap.slideMotor.setPower(power);
+            else teamHardwareMap.slideMotor.setPower(0);
+
+            if(teamHardwareMap.slideMotor.getCurrentPosition() < -2000) teamHardwareMap.bucketRotationServo.setPosition(0.4);
+            else teamHardwareMap.bucketRotationServo.setPosition(1);
 
             telemetry.addLine("Press the dpad up to extend\nPress the dpad down to contract\nChange the 'power' variable in code to test the power");
             telemetry.addData("The motor is currently at the position: ", teamHardwareMap.slideMotor.getCurrentPosition());
+            telemetry.addData("The Rotation servo is at position: ", teamHardwareMap.bucketRotationServo.getPosition());
             telemetry.update();
         }
     }

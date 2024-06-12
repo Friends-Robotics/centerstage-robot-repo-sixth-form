@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.roadrunnerlibs.driveropmodes;
+package org.firstinspires.ftc.teamcode.driveropmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -35,8 +35,34 @@ public class CambridgeTeleOpMode extends LinearOpMode {
         while (opModeIsActive())
         {
             // Arm and Bristles
+            GamePad1();
 
             // Motion
         }
     }
+
+    public void GamePad1(){
+        if(teamHardwareMap.slideMotor.getCurrentPosition() < -1500) teamHardwareMap.bucketRotationServo.setPosition(0.5);
+        else teamHardwareMap.bucketRotationServo.setPosition(1);
+
+        double bristlePower = 0;
+        if(gamepad1.left_bumper) bristlePower = -0.75;
+        else if(gamepad1.right_bumper) bristlePower = 0.75;
+
+        teamHardwareMap.bristlesMotor.setPower(bristlePower);
+
+        if(gamepad1.square) teamHardwareMap.slideMotor.setTargetPosition(0);
+        else if(gamepad1.triangle) teamHardwareMap.slideMotor.setTargetPosition(-2500);
+        else if(gamepad1.circle) teamHardwareMap.slideMotor.setTargetPosition(-4000);
+
+
+        if(gamepad1.cross) teamHardwareMap.bucketLockServo.setPosition(0);
+        else teamHardwareMap.bucketLockServo.setPosition(1);
+
+
+        if(gamepad1.dpad_up) teamHardwareMap.slideMotor.setPower(-0.4);
+        else if(gamepad1.dpad_down) teamHardwareMap.slideMotor.setPower(0.4);
+        else teamHardwareMap.slideMotor.setPower(0);
+    }
+
 }

@@ -75,6 +75,14 @@ public class CambridgeHardwareMap extends TeamHardwareMap {
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        frontLeftMotorFtcLib = new Motor(hardwareMap, "FLW");
+        frontLeftMotorFtcLib.setInverted(true);
+        frontRightMotorFtcLib = new Motor(hardwareMap, "FRW");
+        backLeftMotorFtcLib = new Motor(hardwareMap, "BLW");
+        frontLeftMotorFtcLib.setInverted(true);
+        backRightMotorFtcLib = new Motor(hardwareMap, "BRW");
+        frontLeftMotorFtcLib.setInverted(true);
+
         rightOdometerMotorEx = hardwareMap.get(DcMotorEx.class, "RIGHT_ODOMETER");
         rightOdometerMotorEx.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightOdometerMotorEx.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

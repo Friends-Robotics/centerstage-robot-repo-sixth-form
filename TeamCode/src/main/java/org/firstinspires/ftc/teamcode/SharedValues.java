@@ -13,6 +13,10 @@ public class SharedValues {
         return Math.abs(a - b) < tolerance;
     }
 
+    public static boolean approxEquals(int a, int b, int tolerance) {
+        return Math.abs(a - b) < tolerance;
+    }
+
     public static Pose2d calculateDisplacementVector(Pose2d start, Pose2d end) {
         double hypot = Math.hypot(end.getX() - start.getX(), end.getY() - start.getY());
         if (hypot < 0.1) {

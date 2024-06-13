@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
  */
 
 @TeleOp(name="ARM TEST", group="Linear Opmode")
-public class ArmTestTeleOp extends LinearOpMode {
+public class ArmMovementTeleOp extends LinearOpMode {
 
     private CambridgeHardwareMap teamHardwareMap;
 
@@ -35,16 +35,12 @@ public class ArmTestTeleOp extends LinearOpMode {
 
         while (opModeIsActive())
         {
-            if(gamepad1.dpad_up) teamHardwareMap.slideMotor.setPower(-power);
-            else if(gamepad1.dpad_down) teamHardwareMap.slideMotor.setPower(power);
+            if(gamepad1.dpad_up) teamHardwareMap.slideMotor.setPower(0.4);
+            else if(gamepad1.dpad_down) teamHardwareMap.slideMotor.setPower(-0.4);
             else teamHardwareMap.slideMotor.setPower(0);
 
-            if(teamHardwareMap.slideMotor.getCurrentPosition() < -2000) teamHardwareMap.bucketRotationServo.setPosition(0.4);
-            else teamHardwareMap.bucketRotationServo.setPosition(1);
-
-            telemetry.addLine("Press the dpad up to extend\nPress the dpad down to contract\nChange the 'power' variable in code to test the power");
+            telemetry.addLine("This opmode is solely to move the arm WITHOUT ANY SAFETY FEATURES\nThis means you can break the arm by extending too much, be careful");
             telemetry.addData("The motor is currently at the position: ", teamHardwareMap.slideMotor.getCurrentPosition());
-            telemetry.addData("The Rotation servo is at position: ", teamHardwareMap.bucketRotationServo.getPosition());
             telemetry.update();
         }
     }

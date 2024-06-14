@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode.roadrunnerlibs.driveropmodes;
+package org.firstinspires.ftc.teamcode.driveropmodes;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.fasterxml.jackson.databind.deser.std.JsonLocationInstantiator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
 import org.firstinspires.ftc.teamcode.hardwaremaps.TestHardwareMap;
@@ -39,6 +41,62 @@ public class CambridgeTeleOpMode extends LinearOpMode {
 
         while (opModeIsActive())
         {
+            // BRISTLES
+
+            if (gamepad1.left_bumper) { // inwards
+                teamHardwareMap.bristlesMotor.setPower(1);
+            }
+            else if (gamepad1.right_bumper) { // outwards
+                teamHardwareMap.bristlesMotor.setPower(-1);
+            }
+            else {
+                teamHardwareMap.bristlesMotor.setPower(0);
+            }
+
+            // SET SLIDE MOTOR POSITIONS
+
+            if (gamepad1.square) {
+                teamHardwareMap.slideMotor.setTargetPosition(7); // bottom
+                teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                teamHardwareMap.slideMotor.setPower(0.4);
+            }
+            else if (gamepad1.circle) {
+                teamHardwareMap.slideMotor.setTargetPosition(4000); // bottom
+                teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                teamHardwareMap.slideMotor.setPower(0.4);
+            }
+            else {
+                // SLIDE MOTOR
+
+                if (gamepad1.dpad_up && teamHardwareMap.slideMotor.getCurrentPosition() < 4100) {
+                    teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    teamHardwareMap.slideMotor.setPower(0.4); // upwards
+                } else if (gamepad1.dpad_down && teamHardwareMap.slideMotor.getCurrentPosition() > 5) {
+                    teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    teamHardwareMap.slideMotor.setPower(-0.4); // downwards
+                } else {
+                    teamHardwareMap.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    teamHardwareMap.slideMotor.setPower(0);
+                }
+            }
+
+            // BUCKET ROTATION SERVO
+
+            if (teamHardwareMap.slideMotor.getCurrentPosition() > 1500) {
+                teamHardwareMap.bucketRotationServo.setPosition(0.5); // drop
+            }
+            else {
+                teamHardwareMap.bucketRotationServo.setPosition(1); // normal
+            }
+
+            // BUCKET LOCK SERVO
+
+            if (gamepad1.cross) {
+                teamHardwareMap.bucketLockServo.setPosition(0.5); // open
+            }
+            else {
+                teamHardwareMap.bucketLockServo.setPosition(0); // closed
+            }
 
             telemetry.update();
         }

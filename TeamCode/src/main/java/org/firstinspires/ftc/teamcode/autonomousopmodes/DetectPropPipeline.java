@@ -12,8 +12,8 @@ public class DetectPropPipeline extends OpenCvPipeline {
     @Override
     public Mat processFrame(Mat input) {
         Imgproc.cvtColor(input, output, Imgproc.COLOR_RGB2HSV);
-        Scalar lowerHSV = new Scalar(345, 85, 65);
-        Scalar upperHSV = new Scalar(15, 100, 100);
+        Scalar lowerHSV = new Scalar(215, 85, 65); // blue
+        Scalar upperHSV = new Scalar(245, 100, 100); // blue
         Core.inRange(input, lowerHSV, upperHSV, output);
 
         return output;

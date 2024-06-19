@@ -44,7 +44,7 @@ public class PropDetectionAutonomousOpMode extends LinearOpMode {
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive() && !isStopRequested()) {
-
+            openCvCamera.getFrameBitmap();
 
             telemetry.update();
         }

@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
+import org.firstinspires.ftc.teamcode.webcamautonomous.DetectPropPipeline;
+import org.firstinspires.ftc.teamcode.webcamautonomous.DetectPropPipelineResult;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -14,7 +16,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class PropDetectionAutonomousOpMode extends LinearOpMode {
 
     private CambridgeHardwareMap teamHardwareMap;
-    private OpenCvPipeline detectPropPipeline;
+    private DetectPropPipeline detectPropPipeline;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,11 +42,18 @@ public class PropDetectionAutonomousOpMode extends LinearOpMode {
             }
         });
 
-        waitForStart();
+        while (!isStarted() && !isStopRequested()) {
+            telemetry.addData("Current result", detectPropPipeline.getLatestResults());
+
+            telemetry.update();
+        }
+
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive() && !isStopRequested()) {
-            openCvCamera.getFrameBitmap();
+            if (teamHardwareMap.runTime.milliseconds() > 28 * 1000) stop(); // stop before end to avoid false accusations of running past autonomous period...
+
+            telemetry.addData("Current result", detectPropPipeline.getLatestResults().name());
 
             telemetry.update();
         }

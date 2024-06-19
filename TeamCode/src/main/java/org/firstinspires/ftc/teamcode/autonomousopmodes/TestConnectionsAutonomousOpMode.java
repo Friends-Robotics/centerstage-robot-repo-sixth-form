@@ -19,13 +19,6 @@ import org.firstinspires.ftc.teamcode.hardwaremaps.CambridgeHardwareMap;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This sample shows how to use dead wheels with external encoders
- * paired with motors that don't require encoders.
- * In this sample, we will use the drive motors' encoder
- * ports as they are not needed due to not using the drive encoders.
- * The external encoders we are using are REV through-bore.
- */
 @Autonomous
 public class TestConnectionsAutonomousOpMode extends LinearOpMode {
 

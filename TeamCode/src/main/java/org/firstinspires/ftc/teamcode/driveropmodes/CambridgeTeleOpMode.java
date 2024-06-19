@@ -34,13 +34,15 @@ public class CambridgeTeleOpMode extends LinearOpMode {
     public void runOpMode() {
         teamHardwareMap = new CambridgeHardwareMap(hardwareMap);
 
-        //mecanumDrive = new MecanumDrive(teamHardwareMap.frontLeftMotor, teamHardwareMap.frontRightMotor, teamHardwareMap.backLeftMotor, teamHardwareMap.backRightMotor);
+        mecanumDrive = new MecanumDrive(teamHardwareMap.frontLeftMotorFtcLib, teamHardwareMap.frontRightMotorFtcLib, teamHardwareMap.backLeftMotorFtcLib, teamHardwareMap.backRightMotorFtcLib);
 
         waitForStart();
         teamHardwareMap.runTime.reset();
 
         while (opModeIsActive())
         {
+            // ---------- GAMEPAD 1 (arm) ----------
+
             // BRISTLES
 
             if (gamepad1.left_bumper) { // inwards
@@ -97,6 +99,10 @@ public class CambridgeTeleOpMode extends LinearOpMode {
             else {
                 teamHardwareMap.bucketLockServo.setPosition(0); // closed
             }
+
+            // ---------- GAMEPAD 2 (drivetrain) ----------
+
+            mecanumDrive.driveRobotCentric(gamepad2.left_stick_x, gamepad2.left_stick_y, gamepad2.right_stick_x);
 
             telemetry.update();
         }
